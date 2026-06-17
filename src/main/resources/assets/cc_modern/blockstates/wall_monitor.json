@@ -1,8 +1,0 @@
-{
-  "variants": {
-    "facing=south": { "model": "cc_modern:block/wall_monitor", "y": 0 },
-    "facing=west":  { "model": "cc_modern:block/wall_monitor", "y": 90 },
-    "facing=north": { "model": "cc_modern:block/wall_monitor", "y": 180 },
-    "facing=east":  { "model": "cc_modern:block/wall_monitor", "y": 270 }
-  }
-}
