@@ -4,6 +4,9 @@
   "package": "com.andersmmg.cc_modern.mixin",
   "compatibilityLevel": "JAVA_21",
   "refmap": "cc_modern.refmap.json",
+  "mixins": [
+    "MonitorBlockEntityMixin"
+  ],
   "client": [
     "MonitorBlockEntityRendererAccess"
   ]

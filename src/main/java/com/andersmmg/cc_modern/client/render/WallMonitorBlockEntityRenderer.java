@@ -1,11 +1,11 @@
 package com.andersmmg.cc_modern.client.render;
 
+import com.andersmmg.cc_modern.mixin.MonitorBlockEntityRendererAccess;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import dan200.computercraft.client.FrameInfo;
 import dan200.computercraft.client.integration.ShaderMod;
 import dan200.computercraft.client.render.RenderTypes;
-import com.andersmmg.cc_modern.mixin.MonitorBlockEntityRendererAccess;
 import dan200.computercraft.client.render.monitor.MonitorBlockEntityRenderer;
 import dan200.computercraft.client.render.monitor.MonitorRenderState;
 import dan200.computercraft.client.render.text.FixedWidthFontRenderer;
@@ -22,8 +22,6 @@ import static dan200.computercraft.client.render.text.FixedWidthFontRenderer.FON
 public class WallMonitorBlockEntityRenderer extends MonitorBlockEntityRenderer {
     private static final float MARGIN = (float) (MonitorBlockEntity.RENDER_MARGIN * 1.1);
     private static final float DEPTH_OFFSET = 1.0f / 16.0f - 0.5f + 0.001f;
-
-    private static long lastFrame = -1;
 
     public WallMonitorBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
         super(context);
@@ -43,7 +41,6 @@ public class WallMonitorBlockEntityRenderer extends MonitorBlockEntityRenderer {
             return;
         }
 
-        lastFrame = renderFrame;
         renderState.lastRenderFrame = renderFrame;
         renderState.lastRenderPos = monitorPos;
 

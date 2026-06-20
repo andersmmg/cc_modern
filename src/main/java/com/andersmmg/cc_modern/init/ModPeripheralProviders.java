@@ -1,6 +1,5 @@
 package com.andersmmg.cc_modern.init;
 
-import com.andersmmg.cc_modern.block.WallMonitorBlockEntity;
 import com.andersmmg.cc_modern.peripheral.WallMonitorPeripheral;
 import dan200.computercraft.api.peripheral.PeripheralCapability;
 import net.neoforged.bus.api.IEventBus;
@@ -31,6 +30,16 @@ public final class ModPeripheralProviders {
                 be.peripheral();
                 return new WallMonitorPeripheral(be);
             }
+        );
+        event.registerBlockEntity(
+                PeripheralCapability.get(),
+                ModBlockEntities.SERVER_BE.get(),
+                (be, side) -> be.peripheral()
+        );
+        event.registerBlockEntity(
+                PeripheralCapability.get(),
+                ModBlockEntities.SERVER_ADVANCED_BE.get(),
+                (be, side) -> be.peripheral()
         );
     }
 }

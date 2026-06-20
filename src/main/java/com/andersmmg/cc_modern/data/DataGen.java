@@ -17,29 +17,29 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 @EventBusSubscriber(modid = CCModern.MODID)
 public class DataGen {
     @SubscribeEvent
     public static void onGatherData(GatherDataEvent event) {
-        event.getGenerator().addProvider(event.includeClient(), new WallMonitorModelProvider(event.getGenerator().getPackOutput()));
+        var gen = event.getGenerator();
+        var packOutput = gen.getPackOutput();
+        var lookup = event.getLookupProvider();
+
+        gen.addProvider(event.includeClient(), new WallBlockModelProvider(packOutput));
+
+        gen.addProvider(event.includeServer(), new ModLootTableProvider(packOutput, lookup));
+        gen.addProvider(event.includeServer(), new ModRecipeProvider(packOutput, lookup));
     }
 
-    private static class WallMonitorModelProvider implements DataProvider {
+    private static class WallBlockModelProvider implements DataProvider {
         private final PackOutput.PathProvider blockStatePath;
         private final PackOutput.PathProvider modelPath;
 
-        public WallMonitorModelProvider(PackOutput output) {
+        public WallBlockModelProvider(PackOutput output) {
             blockStatePath = output.createPathProvider(PackOutput.Target.RESOURCE_PACK, "blockstates");
             modelPath = output.createPathProvider(PackOutput.Target.RESOURCE_PACK, "models");
         }
@@ -52,6 +52,7 @@ public class DataGen {
 
             var generators = new BlockModelGenerators(generator -> blockStates.put(generator.getBlock(), generator), models::put, explicitItems::add);
             WallMonitorModels.addBlockModels(generators);
+            ServerModels.addBlockModels(generators);
 
             for (var block : BuiltInRegistries.BLOCK) {
                 if (!blockStates.containsKey(block)) continue;
@@ -77,7 +78,7 @@ public class DataGen {
 
         @Override
         public String getName() {
-            return "Wall Monitor Models";
+            return "Wall Block Models";
         }
     }
 }

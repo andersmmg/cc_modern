@@ -53,11 +53,6 @@ public class WallMonitorBlock extends MonitorBlock {
     }
 
     @Override
-    public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return Shapes.empty();
-    }
-
-    @Override
     protected MapCodec<? extends WallMonitorBlock> codec() {
         return CODEC;
     }
