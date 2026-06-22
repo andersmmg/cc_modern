@@ -1,5 +1,6 @@
 package com.andersmmg.cc_modern;
 
+import com.andersmmg.cc_modern.block.AngledMonitorBlock;
 import com.andersmmg.cc_modern.block.ServerBlock;
 import com.andersmmg.cc_modern.block.WallMonitorBlock;
 import com.andersmmg.cc_modern.init.HolderRegistryEntry;
@@ -92,12 +93,46 @@ public class CCModern {
     public static final DeferredItem<BlockItem> SERVER_ADVANCED_BLOCK_ITEM =
             ITEMS.registerSimpleBlockItem("server_advanced", SERVER_ADVANCED_BLOCK);
 
+    public static final DeferredBlock<AngledMonitorBlock> ANGLED_MONITOR_BLOCK = BLOCKS.register(
+            "angled_monitor",
+            () -> new AngledMonitorBlock(
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.STONE)
+                            .strength(2.5F)
+                            .requiresCorrectToolForDrops(),
+                    new HolderRegistryEntry<>(
+                            ModBlockEntities.ANGLED_MONITOR_BE,
+                            ModBlockEntities.ANGLED_MONITOR_BE.unwrapKey().orElseThrow().location()
+                    )
+            )
+    );
+    public static final DeferredItem<BlockItem> ANGLED_MONITOR_BLOCK_ITEM =
+            ITEMS.registerSimpleBlockItem("angled_monitor", ANGLED_MONITOR_BLOCK);
+
+    public static final DeferredBlock<AngledMonitorBlock> ANGLED_MONITOR_ADVANCED_BLOCK = BLOCKS.register(
+            "angled_monitor_advanced",
+            () -> new AngledMonitorBlock(
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.GOLD)
+                            .strength(2.5F)
+                            .requiresCorrectToolForDrops(),
+                    new HolderRegistryEntry<>(
+                            ModBlockEntities.ANGLED_MONITOR_ADVANCED_BE,
+                            ModBlockEntities.ANGLED_MONITOR_ADVANCED_BE.unwrapKey().orElseThrow().location()
+                    )
+            )
+    );
+    public static final DeferredItem<BlockItem> ANGLED_MONITOR_ADVANCED_BLOCK_ITEM =
+            ITEMS.registerSimpleBlockItem("angled_monitor_advanced", ANGLED_MONITOR_ADVANCED_BLOCK);
+
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MOD_TAB = CREATIVE_TABS.register("tab", () -> CreativeModeTab.builder()
         .title(Component.translatable("creativetab." + MODID + ".tab"))
             .icon(() -> new ItemStack(SERVER_BLOCK_ITEM.get()))
         .displayItems((parameters, output) -> {
             output.accept(WALL_MONITOR_BLOCK_ITEM.get());
             output.accept(WALL_MONITOR_ADVANCED_BLOCK_ITEM.get());
+            output.accept(ANGLED_MONITOR_BLOCK_ITEM.get());
+            output.accept(ANGLED_MONITOR_ADVANCED_BLOCK_ITEM.get());
             output.accept(SERVER_BLOCK_ITEM.get());
             output.accept(SERVER_ADVANCED_BLOCK_ITEM.get());
         })

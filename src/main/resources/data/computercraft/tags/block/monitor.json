@@ -2,6 +2,8 @@
   "replace": false,
   "values": [
     "cc_modern:wall_monitor",
-    "cc_modern:wall_monitor_advanced"
+    "cc_modern:wall_monitor_advanced",
+    "cc_modern:angled_monitor",
+    "cc_modern:angled_monitor_advanced"
   ]
 }

@@ -52,6 +52,7 @@ public class DataGen {
 
             var generators = new BlockModelGenerators(generator -> blockStates.put(generator.getBlock(), generator), models::put, explicitItems::add);
             WallMonitorModels.addBlockModels(generators);
+            AngledMonitorModels.addBlockModels(generators);
             ServerModels.addBlockModels(generators);
 
             for (var block : BuiltInRegistries.BLOCK) {

@@ -21,3 +21,6 @@ hs_err_pid*
 run
 
 src/generated/
+
+# CC: Tweaked resources for reference
+src/main/resources/assets/computercraft

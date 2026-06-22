@@ -1,5 +1,6 @@
 package com.andersmmg.cc_modern.client.render;
 
+import com.andersmmg.cc_modern.block.AngledMonitorBlock;
 import com.andersmmg.cc_modern.block.WallMonitorBlock;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -8,7 +9,6 @@ import net.minecraft.client.Camera;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.joml.Matrix4f;
@@ -22,12 +22,17 @@ public class WallMonitorHighlightRenderer {
         var world = camera.getEntity().getCommandSenderWorld();
         var pos = hit.getBlockPos();
         var state = world.getBlockState(pos);
-        if (!(state.getBlock() instanceof WallMonitorBlock)) return false;
+        var block = state.getBlock();
+        if (!(block instanceof WallMonitorBlock) && !(block instanceof AngledMonitorBlock)) return false;
 
         var tile = world.getBlockEntity(pos);
         if (!(tile instanceof MonitorBlockEntity monitor)) return false;
 
         var faces = EnumSet.allOf(Direction.class);
+        Direction slabFront = block instanceof AngledMonitorBlock
+                ? monitor.getFront().getOpposite()
+                : monitor.getFront();
+        Direction slabBack = slabFront.getOpposite();
         faces.remove(monitor.getFront());
         if (monitor.getXIndex() != 0) faces.remove(monitor.getRight().getOpposite());
         if (monitor.getXIndex() != monitor.getWidth() - 1) faces.remove(monitor.getRight());
@@ -48,31 +53,31 @@ public class WallMonitorHighlightRenderer {
         var transform = transformStack.last().pose();
         var normal = transformStack.last();
 
-        if (faces.contains(Direction.NORTH) || faces.contains(Direction.WEST))
+        if (slabFront != Direction.NORTH && slabFront != Direction.WEST && (faces.contains(Direction.NORTH) || faces.contains(Direction.WEST)))
             line(buffer, transform, normal, minX, minY, minZ, minX, maxY, minZ);
-        if (faces.contains(Direction.SOUTH) || faces.contains(Direction.WEST))
+        if (slabFront != Direction.SOUTH && slabFront != Direction.WEST && (faces.contains(Direction.SOUTH) || faces.contains(Direction.WEST)))
             line(buffer, transform, normal, minX, minY, maxZ, minX, maxY, maxZ);
-        if (faces.contains(Direction.NORTH) || faces.contains(Direction.EAST))
+        if (slabFront != Direction.NORTH && slabFront != Direction.EAST && (faces.contains(Direction.NORTH) || faces.contains(Direction.EAST)))
             line(buffer, transform, normal, maxX, minY, minZ, maxX, maxY, minZ);
-        if (faces.contains(Direction.SOUTH) || faces.contains(Direction.EAST))
+        if (slabFront != Direction.SOUTH && slabFront != Direction.EAST && (faces.contains(Direction.SOUTH) || faces.contains(Direction.EAST)))
             line(buffer, transform, normal, maxX, minY, maxZ, maxX, maxY, maxZ);
 
         if (faces.contains(Direction.NORTH) || faces.contains(Direction.DOWN))
             line(buffer, transform, normal, minX, minY, minZ, maxX, minY, minZ);
         if (faces.contains(Direction.SOUTH) || faces.contains(Direction.DOWN))
             line(buffer, transform, normal, minX, minY, maxZ, maxX, minY, maxZ);
-        if (faces.contains(Direction.NORTH) || faces.contains(Direction.UP))
+        if (slabBack == Direction.NORTH && (faces.contains(Direction.NORTH) || faces.contains(Direction.UP)))
             line(buffer, transform, normal, minX, maxY, minZ, maxX, maxY, minZ);
-        if (faces.contains(Direction.SOUTH) || faces.contains(Direction.UP))
+        if (slabBack == Direction.SOUTH && (faces.contains(Direction.SOUTH) || faces.contains(Direction.UP)))
             line(buffer, transform, normal, minX, maxY, maxZ, maxX, maxY, maxZ);
 
         if (faces.contains(Direction.WEST) || faces.contains(Direction.DOWN))
             line(buffer, transform, normal, minX, minY, minZ, minX, minY, maxZ);
         if (faces.contains(Direction.EAST) || faces.contains(Direction.DOWN))
             line(buffer, transform, normal, maxX, minY, minZ, maxX, minY, maxZ);
-        if (faces.contains(Direction.WEST) || faces.contains(Direction.UP))
+        if (slabBack == Direction.WEST && (faces.contains(Direction.WEST) || faces.contains(Direction.UP)))
             line(buffer, transform, normal, minX, maxY, minZ, minX, maxY, maxZ);
-        if (faces.contains(Direction.EAST) || faces.contains(Direction.UP))
+        if (slabBack == Direction.EAST && (faces.contains(Direction.EAST) || faces.contains(Direction.UP)))
             line(buffer, transform, normal, maxX, maxY, minZ, maxX, maxY, maxZ);
 
         transformStack.popPose();

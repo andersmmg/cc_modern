@@ -66,5 +66,29 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(BuiltInRegistries.ITEM.get(WIRELESS_MODEM_NORMAL))
                 .unlockedBy("has_computer_advanced", has(BuiltInRegistries.ITEM.get(COMPUTER_ADVANCED)))
                 .save(output, ResourceLocation.fromNamespaceAndPath(CCModern.MODID, "server_advanced"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, CCModern.ANGLED_MONITOR_BLOCK.get(), 2)
+                .pattern("S  ")
+                .pattern("SG ")
+                .pattern("SSS")
+                .define('G', GLASS_PANES)
+                .define('S', Items.STONE)
+                .unlockedBy("has_computer_normal", has(BuiltInRegistries.ITEM.get(COMPUTER_NORMAL)))
+                .save(output, ResourceLocation.fromNamespaceAndPath(CCModern.MODID, "angled_monitor"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, CCModern.ANGLED_MONITOR_ADVANCED_BLOCK.get())
+                .pattern("I  ")
+                .pattern("IG ")
+                .pattern("III")
+                .define('G', GLASS_PANES)
+                .define('I', Items.GOLD_INGOT)
+                .unlockedBy("has_computer_advanced", has(BuiltInRegistries.ITEM.get(COMPUTER_ADVANCED)))
+                .save(output, ResourceLocation.fromNamespaceAndPath(CCModern.MODID, "angled_monitor_advanced"));
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, CCModern.ANGLED_MONITOR_ADVANCED_BLOCK.get())
+                .requires(CCModern.ANGLED_MONITOR_BLOCK.get())
+                .requires(Items.GOLD_INGOT, 5)
+                .unlockedBy("has_computer_advanced", has(BuiltInRegistries.ITEM.get(COMPUTER_ADVANCED)))
+                .save(output, ResourceLocation.fromNamespaceAndPath(CCModern.MODID, "angled_monitor_advanced_from_normal"));
     }
 }

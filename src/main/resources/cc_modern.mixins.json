@@ -5,7 +5,9 @@
   "compatibilityLevel": "JAVA_21",
   "refmap": "cc_modern.refmap.json",
   "mixins": [
-    "MonitorBlockEntityMixin"
+    "MonitorBlockEntityAccess",
+    "MonitorBlockEntityMixin",
+    "MonitorBlockMixin"
   ],
   "client": [
     "MonitorBlockEntityRendererAccess"

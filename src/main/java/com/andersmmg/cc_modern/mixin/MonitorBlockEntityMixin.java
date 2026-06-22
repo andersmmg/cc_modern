@@ -1,5 +1,6 @@
 package com.andersmmg.cc_modern.mixin;
 
+import com.andersmmg.cc_modern.block.AngledMonitorBlockEntity;
 import com.andersmmg.cc_modern.block.WallMonitorBlockEntity;
 import dan200.computercraft.shared.peripheral.monitor.MonitorBlockEntity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -12,7 +13,9 @@ public class MonitorBlockEntityMixin {
 
     @Inject(method = "isCompatible", at = @At("HEAD"), cancellable = true)
     private void cc_modern$avoidCrossTypeMerge(MonitorBlockEntity other, CallbackInfoReturnable<Boolean> cir) {
-        if ((Object) this instanceof WallMonitorBlockEntity ^ other instanceof WallMonitorBlockEntity) {
+        if ((Object) this instanceof AngledMonitorBlockEntity || other instanceof AngledMonitorBlockEntity) {
+            cir.setReturnValue(false);
+        } else if ((Object) this instanceof WallMonitorBlockEntity ^ other instanceof WallMonitorBlockEntity) {
             cir.setReturnValue(false);
         }
     }
