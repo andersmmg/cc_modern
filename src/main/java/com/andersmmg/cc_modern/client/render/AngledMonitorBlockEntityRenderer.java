@@ -60,7 +60,7 @@ public class AngledMonitorBlockEntityRenderer extends MonitorBlockEntityRenderer
         transform.mulPose(Axis.YN.rotationDegrees(yaw));
         transform.mulPose(Axis.XP.rotationDegrees(TILT_PITCH_DEG));
         transform.translate(
-                -0.5 + MonitorBlockEntity.RENDER_BORDER + MonitorBlockEntity.RENDER_MARGIN,
+                -0.5 + MonitorBlockEntity.RENDER_BORDER + MonitorBlockEntity.RENDER_MARGIN - (origin.getWidth() - 1),
                 origin.getHeight() - 0.63 - (MonitorBlockEntity.RENDER_BORDER + MonitorBlockEntity.RENDER_MARGIN),
                 DEPTH_OFFSET
         );

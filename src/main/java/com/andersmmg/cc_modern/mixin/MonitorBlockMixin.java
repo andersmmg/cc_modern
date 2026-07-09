@@ -32,7 +32,7 @@ public class MonitorBlockMixin {
         if (player.isCrouching()) return;
 
         Direction facing = state.getValue(MonitorBlock.FACING);
-        if (hit.getDirection() != Direction.UP && hit.getDirection() != facing.getOpposite()) return;
+        if (hit.getDirection() == Direction.DOWN || hit.getDirection() == facing) return;
 
         if (!(level.getBlockEntity(pos) instanceof MonitorBlockEntity monitor)) return;
 
@@ -79,7 +79,7 @@ public class MonitorBlockMixin {
 
         double fracX = (rx - screenX0) / quadSize;
         double fracY = (screenY1 - ry) / quadSize;
-        if (fracX < 0.0 || fracX >= 1.0 || fracY < 0.0 || fracY >= 1.0) {
+        if (fracY < 0.0 || fracY >= 1.0) {
             cir.setReturnValue(InteractionResult.PASS);
             return;
         }

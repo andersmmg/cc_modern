@@ -22,6 +22,8 @@ public class AngledMonitorBlock extends MonitorBlock {
 
     private static final VoxelShape OCCUPIED = Shapes.box(0, 0, 0, 1, 7.2 / 16, 1);
 
+    private static final VoxelShape INTERACTION = Shapes.box(0, 0, 0, 1, 1, 1);
+
     private final RegistryEntry<? extends BlockEntityType<? extends AngledMonitorBlockEntity>> typeAccessor;
 
     public AngledMonitorBlock(Properties properties, RegistryEntry<? extends BlockEntityType<? extends AngledMonitorBlockEntity>> type) {
@@ -39,6 +41,11 @@ public class AngledMonitorBlock extends MonitorBlock {
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return OCCUPIED;
+    }
+
+    @Override
+    public VoxelShape getInteractionShape(BlockState state, BlockGetter level, BlockPos pos) {
+        return INTERACTION;
     }
 
     @Override

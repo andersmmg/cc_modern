@@ -4,7 +4,8 @@
   "textures": {
     "0": "computercraft:block/monitor_advanced_4",
     "1": "computercraft:block/monitor_advanced_15",
-    "2": "computercraft:block/monitor_advanced_0",
+    "2": "computercraft:block/monitor_advanced_32",
+    "3": "computercraft:block/monitor_advanced_32",
     "particle": "computercraft:block/monitor_advanced_4"
   },
   "elements": [
@@ -142,6 +143,7 @@
             16,
             16
           ],
+          "rotation": 270,
           "texture": "#1"
         },
         "down": {
@@ -183,7 +185,7 @@
             0.75,
             1
           ],
-          "texture": "#1"
+          "texture": "#2"
         },
         "east": {
           "uv": [
@@ -215,11 +217,12 @@
         "up": {
           "uv": [
             0,
-            0,
-            0.75,
-            16
+            15,
+            16,
+            15.75
           ],
-          "texture": "#1"
+          "rotation": 270,
+          "texture": "#2"
         },
         "down": {
           "uv": [
@@ -261,7 +264,7 @@
             16,
             6.5
           ],
-          "texture": "#0"
+          "texture": "#3"
         },
         "south": {
           "uv": [
@@ -320,7 +323,7 @@
             0.525,
             1.211
           ],
-          "texture": "#1"
+          "texture": "#2"
         },
         "east": {
           "uv": [
@@ -329,7 +332,7 @@
             16,
             0.211
           ],
-          "texture": "#0"
+          "texture": "#2"
         },
         "south": {
           "uv": [
@@ -351,12 +354,13 @@
         },
         "up": {
           "uv": [
-            0.475,
             0,
-            1,
-            16
+            15,
+            16,
+            15.525
           ],
-          "texture": "#1"
+          "rotation": 270,
+          "texture": "#2"
         },
         "down": {
           "uv": [
@@ -877,10 +881,10 @@
         },
         "south": {
           "uv": [
-            14,
-            4.525,
-            15,
-            5.275
+            11,
+            12.525,
+            12,
+            13.275
           ],
           "texture": "#2"
         },
@@ -945,10 +949,10 @@
         },
         "south": {
           "uv": [
-            3,
-            4.125,
-            5,
-            5.275
+            2,
+            12.125,
+            4,
+            13.275
           ],
           "texture": "#2"
         },
@@ -1013,10 +1017,10 @@
         },
         "south": {
           "uv": [
-            7,
-            3.225,
-            9,
-            5.275
+            4,
+            11.225,
+            6,
+            13.275
           ],
           "texture": "#2"
         },
@@ -1081,10 +1085,10 @@
         },
         "south": {
           "uv": [
-            9,
-            2.525,
-            11,
-            5.275
+            6,
+            10.525,
+            8,
+            13.275
           ],
           "texture": "#2"
         },
@@ -1149,10 +1153,10 @@
         },
         "south": {
           "uv": [
-            11,
-            1.625,
-            13,
-            5.275
+            8,
+            9.625,
+            10,
+            13.275
           ],
           "texture": "#2"
         },
@@ -1217,10 +1221,10 @@
         },
         "south": {
           "uv": [
-            13,
-            1.925,
-            15,
-            6.275
+            10,
+            9.925,
+            12,
+            14.275
           ],
           "texture": "#2"
         },
@@ -1285,10 +1289,10 @@
         },
         "south": {
           "uv": [
-            13,
-            1.025,
-            15,
-            6.275
+            10,
+            9.025,
+            12,
+            14.275
           ],
           "texture": "#2"
         },
