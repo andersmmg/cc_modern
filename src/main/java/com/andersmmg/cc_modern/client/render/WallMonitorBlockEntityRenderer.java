@@ -1,5 +1,6 @@
 package com.andersmmg.cc_modern.client.render;
 
+import com.andersmmg.cc_modern.compat.CCGraphicsCompat;
 import com.andersmmg.cc_modern.mixin.MonitorBlockEntityRendererAccess;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -15,6 +16,7 @@ import dan200.computercraft.shared.util.DirectionUtil;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.world.phys.AABB;
+import org.jetbrains.annotations.NotNull;
 
 import static dan200.computercraft.client.render.text.FixedWidthFontRenderer.FONT_HEIGHT;
 import static dan200.computercraft.client.render.text.FixedWidthFontRenderer.FONT_WIDTH;
@@ -70,18 +72,22 @@ public class WallMonitorBlockEntityRenderer extends MonitorBlockEntityRenderer {
 
         var terminal = originTerminal.getTerminal();
         if (terminal != null && !ShaderMod.get().isRenderingShadowPass()) {
-            int width = terminal.getWidth(), height = terminal.getHeight();
-            int pixelWidth = width * FONT_WIDTH, pixelHeight = height * FONT_HEIGHT;
-            var xScale = xSize / pixelWidth;
-            var yScale = ySize / pixelHeight;
-            transform.pushPose();
-            transform.scale((float) xScale, (float) -yScale, 1.0f);
+            float screenWidth = (float) xSize;
+            float screenHeight = (float) ySize;
+            if (!CCGraphicsCompat.renderGraphicsOverlay(originTerminal, renderState, transform, bufferSource, screenWidth, screenHeight)) {
+                int width = terminal.getWidth(), height = terminal.getHeight();
+                int pixelWidth = width * FONT_WIDTH, pixelHeight = height * FONT_HEIGHT;
+                var xScale = xSize / pixelWidth;
+                var yScale = ySize / pixelHeight;
+                transform.pushPose();
+                transform.scale((float) xScale, (float) -yScale, 1.0f);
 
-            var matrix = transform.last().pose();
+                var matrix = transform.last().pose();
 
-            ((MonitorBlockEntityRendererAccess) this).cc_modern$renderTerminal(matrix, originTerminal, renderState, terminal, (float) (MARGIN / xScale), (float) (MARGIN / yScale));
+                ((MonitorBlockEntityRendererAccess) this).cc_modern$renderTerminal(matrix, originTerminal, renderState, terminal, (float) (MARGIN / xScale), (float) (MARGIN / yScale));
 
-            transform.popPose();
+                transform.popPose();
+            }
         } else {
             FixedWidthFontRenderer.drawEmptyTerminal(
                 FixedWidthFontRenderer.toVertexConsumer(transform, bufferSource.getBuffer(RenderTypes.TERMINAL)),
@@ -99,7 +105,7 @@ public class WallMonitorBlockEntityRenderer extends MonitorBlockEntityRenderer {
     }
 
     @Override
-    public AABB getRenderBoundingBox(MonitorBlockEntity monitor) {
+    public @NotNull AABB getRenderBoundingBox(MonitorBlockEntity monitor) {
         return monitor.getRenderBoundingBox();
     }
 }
