@@ -1,8 +1,13 @@
+import org.jetbrains.changelog.Changelog
+
 plugins {
     id 'java-library'
     id 'maven-publish'
     id 'idea'
     id 'net.neoforged.moddev' version '2.0.141'
+    id "com.modrinth.minotaur" version "2.+"
+    id "com.github.breadmoirai.github-release" version "2.4.1"
+    id 'org.jetbrains.changelog' version '2.2.0'
 }
 
 version = mod_version
@@ -183,4 +188,44 @@ idea {
         downloadSources = true
         downloadJavadoc = true
     }
+}
+
+changelog {
+    repositoryUrl = "https://github.com/andersmmg/cc_modern"
+    groups = ["Added", "Changed", "Deprecated", "Removed", "Fixed"]
+    keepUnreleasedSection = true
+    version = mod_version
+}
+
+modrinth {
+    token = MODRINTH_TOKEN
+    projectId = project.modrinth_id
+    versionType = "release"
+    uploadFile = jar
+    gameVersions = [project.minecraft_version]
+    loaders = ["neoforge"]
+    syncBodyFrom = rootProject.file("README.md").text
+    changelog = project.changelog.renderItem(project.changelog.getLatest(), Changelog.OutputType.MARKDOWN)
+    tasks.modrinth.dependsOn(tasks.modrinthSyncBody)
+    versionName = "${project.archives_base_name}-${project.minecraft_version}-${project.mod_version}"
+    dependencies {
+        required.project "cc-tweaked"
+    }
+    debugMode = false
+}
+
+githubRelease {
+    token = GITHUB_TOKEN
+    owner = "andersmmg"
+    repo = project.archives_base_name
+    draft = false
+    releaseName = mod_name + " " + version
+    body = project.changelog.renderItem(project.changelog.getLatest(), Changelog.OutputType.MARKDOWN)
+    releaseAssets = [jar]
+    allowUploadToExisting = true
+    dryRun = false
+}
+
+tasks.register('uploadRelease') {
+    dependsOn 'modrinth', 'githubRelease'
 }
