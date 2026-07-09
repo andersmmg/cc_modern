@@ -5,5 +5,7 @@
   "block.cc_modern.angled_monitor_advanced": "Advanced Angled Monitor",
   "block.cc_modern.server": "Server",
   "block.cc_modern.server_advanced": "Advanced Server",
-  "creativetab.cc_modern.tab": "CC: Modern"
+  "creativetab.cc_modern.tab": "CC: Modern",
+  "cc_modern.configuration.preventMergeWhenSneaking": "Prevent Merge When Sneaking",
+  "cc_modern.configuration.preventMergeWhenSneaking.tooltip": "When enabled, sneaking while placing a monitor prevents it from merging with adjacent monitors."
 }

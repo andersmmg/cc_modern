@@ -1,13 +1,16 @@
 package com.andersmmg.cc_modern.mixin;
 
 import com.andersmmg.cc_modern.block.AngledMonitorBlock;
+import com.andersmmg.cc_modern.config.CCModernConfig;
 import com.mojang.math.Axis;
 import dan200.computercraft.shared.peripheral.monitor.MonitorBlock;
 import dan200.computercraft.shared.peripheral.monitor.MonitorBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
@@ -17,7 +20,10 @@ import org.joml.Vector4f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import javax.annotation.Nullable;
 
 /**
  * Route clicks on the front and top faces of angled monitor using raycast
@@ -113,5 +119,14 @@ public class MonitorBlockMixin {
 
         ((MonitorBlockEntityAccess) monitor).cc_modern$monitorTouched(synthX, synthY, synthZ);
         cir.setReturnValue(InteractionResult.sidedSuccess(false));
+    }
+
+    @Inject(method = "setPlacedBy", at = @At("HEAD"), cancellable = true)
+    private void cc_modern$preventMergeWhenSneaking(Level world, BlockPos pos, BlockState state,
+                                                    @Nullable LivingEntity placer, ItemStack stack,
+                                                    CallbackInfo ci) {
+        if (CCModernConfig.PREVENT_MERGE_WHEN_SNEAKING.get() && placer != null && placer.isShiftKeyDown()) {
+            ci.cancel();
+        }
     }
 }

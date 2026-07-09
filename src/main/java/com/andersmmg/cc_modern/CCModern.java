@@ -3,6 +3,7 @@ package com.andersmmg.cc_modern;
 import com.andersmmg.cc_modern.block.AngledMonitorBlock;
 import com.andersmmg.cc_modern.block.ServerBlock;
 import com.andersmmg.cc_modern.block.WallMonitorBlock;
+import com.andersmmg.cc_modern.config.CCModernConfig;
 import com.andersmmg.cc_modern.init.HolderRegistryEntry;
 import com.andersmmg.cc_modern.init.ModBlockEntities;
 import com.andersmmg.cc_modern.init.ModPeripheralProviders;
@@ -16,6 +17,10 @@ import net.minecraft.world.level.material.MapColor;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.client.gui.ConfigurationScreen;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -139,6 +144,13 @@ public class CCModern {
         .build());
 
     public CCModern(IEventBus modEventBus, ModContainer modContainer) {
+        modContainer.registerConfig(ModConfig.Type.COMMON, CCModernConfig.SPEC);
+
+        if (FMLEnvironment.dist == net.neoforged.api.distmarker.Dist.CLIENT) {
+            modContainer.registerExtensionPoint(IConfigScreenFactory.class,
+                    ConfigurationScreen::new);
+        }
+
         BLOCKS.register(modEventBus);
         ITEMS.register(modEventBus);
         CREATIVE_TABS.register(modEventBus);
