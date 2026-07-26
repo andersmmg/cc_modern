@@ -4,6 +4,8 @@
 
 ### Added
 
+- Support for CC: Graphics mod
+
 ### Changed
 
 ### Deprecated
