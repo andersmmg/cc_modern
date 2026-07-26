@@ -108,7 +108,7 @@ public class MonitorBlockMixin {
             }
             case EAST -> {
                 synthX = 1.0f;
-                synthZ = (float) (interiorOffset + fracX * quadSize);
+                synthZ = (float) (1.0 - interiorOffset - fracX * quadSize);
             }
             default -> {
                 cir.setReturnValue(InteractionResult.PASS);
