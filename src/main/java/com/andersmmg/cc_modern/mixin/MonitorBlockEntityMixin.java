@@ -1,6 +1,7 @@
 package com.andersmmg.cc_modern.mixin;
 
 import com.andersmmg.cc_modern.block.AngledMonitorBlockEntity;
+import com.andersmmg.cc_modern.block.TransparentMonitorBlockEntity;
 import com.andersmmg.cc_modern.block.WallMonitorBlockEntity;
 import dan200.computercraft.shared.peripheral.monitor.MonitorBlockEntity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -21,7 +22,16 @@ public class MonitorBlockEntityMixin {
             if (selfAngled != otherAngled || self.getBlockPos().getY() != other.getBlockPos().getY()) {
                 cir.setReturnValue(false);
             }
-        } else if (self instanceof WallMonitorBlockEntity ^ other instanceof WallMonitorBlockEntity) {
+            return;
+        }
+
+        boolean selfTrans = self instanceof TransparentMonitorBlockEntity;
+        boolean otherTrans = other instanceof TransparentMonitorBlockEntity;
+        if (selfTrans ^ otherTrans) {
+            cir.setReturnValue(false);
+            return;
+        }
+        if (!selfTrans && (self instanceof WallMonitorBlockEntity ^ other instanceof WallMonitorBlockEntity)) {
             cir.setReturnValue(false);
         }
     }

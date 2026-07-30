@@ -5,6 +5,7 @@
 ### Added
 
 - Support for CC: Graphics mod
+- Transparent monitors
 
 ### Changed
 

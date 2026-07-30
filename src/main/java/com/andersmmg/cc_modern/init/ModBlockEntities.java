@@ -3,6 +3,7 @@ package com.andersmmg.cc_modern.init;
 import com.andersmmg.cc_modern.CCModern;
 import com.andersmmg.cc_modern.block.AngledMonitorBlockEntity;
 import com.andersmmg.cc_modern.block.ServerBlockEntity;
+import com.andersmmg.cc_modern.block.TransparentMonitorBlockEntity;
 import com.andersmmg.cc_modern.block.WallMonitorBlockEntity;
 import dan200.computercraft.shared.computer.core.ComputerFamily;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -27,6 +28,8 @@ public final class ModBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<WallMonitorBlockEntity>> WALL_MONITOR_ADVANCED_BE;
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<AngledMonitorBlockEntity>> ANGLED_MONITOR_BE;
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<AngledMonitorBlockEntity>> ANGLED_MONITOR_ADVANCED_BE;
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TransparentMonitorBlockEntity>> TRANSPARENT_MONITOR_BE;
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TransparentMonitorBlockEntity>> TRANSPARENT_MONITOR_ADVANCED_BE;
     private static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ServerBlockEntity>>[] BE_SERVER_REF =
             new DeferredHolder[1];
     private static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ServerBlockEntity>>[] BE_SERVER_ADV_REF =
@@ -34,6 +37,10 @@ public final class ModBlockEntities {
     private static final DeferredHolder<BlockEntityType<?>, BlockEntityType<AngledMonitorBlockEntity>>[] BE_ANGLED_REF =
             new DeferredHolder[1];
     private static final DeferredHolder<BlockEntityType<?>, BlockEntityType<AngledMonitorBlockEntity>>[] BE_ANGLED_ADV_REF =
+            new DeferredHolder[1];
+    private static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TransparentMonitorBlockEntity>>[] BE_TRANSPARENT_REF =
+            new DeferredHolder[1];
+    private static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TransparentMonitorBlockEntity>>[] BE_TRANSPARENT_ADV_REF =
             new DeferredHolder[1];
 
     static {
@@ -90,5 +97,23 @@ public final class ModBlockEntities {
                 ).build(null)
         );
         ANGLED_MONITOR_ADVANCED_BE = BE_ANGLED_ADV_REF[0];
+
+        BE_TRANSPARENT_REF[0] = BLOCK_ENTITY_TYPES.register(
+                "transparent_monitor",
+                () -> BlockEntityType.Builder.of(
+                        (pos, state) -> new TransparentMonitorBlockEntity(BE_TRANSPARENT_REF[0].get(), pos, state, false),
+                        CCModern.TRANSPARENT_MONITOR_BLOCK.get()
+                ).build(null)
+        );
+        TRANSPARENT_MONITOR_BE = BE_TRANSPARENT_REF[0];
+
+        BE_TRANSPARENT_ADV_REF[0] = BLOCK_ENTITY_TYPES.register(
+                "transparent_monitor_advanced",
+                () -> BlockEntityType.Builder.of(
+                        (pos, state) -> new TransparentMonitorBlockEntity(BE_TRANSPARENT_ADV_REF[0].get(), pos, state, true),
+                        CCModern.TRANSPARENT_MONITOR_ADVANCED_BLOCK.get()
+                ).build(null)
+        );
+        TRANSPARENT_MONITOR_ADVANCED_BE = BE_TRANSPARENT_ADV_REF[0];
     }
 }

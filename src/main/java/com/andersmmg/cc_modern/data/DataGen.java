@@ -54,6 +54,7 @@ public class DataGen {
             WallMonitorModels.addBlockModels(generators);
             AngledMonitorModels.addBlockModels(generators);
             ServerModels.addBlockModels(generators);
+            TransparentMonitorModels.addBlockModels(generators);
 
             for (var block : BuiltInRegistries.BLOCK) {
                 if (!blockStates.containsKey(block)) continue;

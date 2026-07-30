@@ -58,5 +58,21 @@ public final class ModPeripheralProviders {
                     return new MonitorPeripheral(be);
                 }
         );
+        event.registerBlockEntity(
+                PeripheralCapability.get(),
+                ModBlockEntities.TRANSPARENT_MONITOR_BE.get(),
+                (be, side) -> {
+                    be.peripheral();
+                    return new MonitorPeripheral(be);
+                }
+        );
+        event.registerBlockEntity(
+                PeripheralCapability.get(),
+                ModBlockEntities.TRANSPARENT_MONITOR_ADVANCED_BE.get(),
+                (be, side) -> {
+                    be.peripheral();
+                    return new MonitorPeripheral(be);
+                }
+        );
     }
 }

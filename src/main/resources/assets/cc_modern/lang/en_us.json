@@ -3,6 +3,8 @@
   "block.cc_modern.wall_monitor_advanced": "Advanced Wall Monitor",
   "block.cc_modern.angled_monitor": "Angled Monitor",
   "block.cc_modern.angled_monitor_advanced": "Advanced Angled Monitor",
+  "block.cc_modern.transparent_monitor": "Transparent Monitor",
+  "block.cc_modern.transparent_monitor_advanced": "Advanced Transparent Monitor",
   "block.cc_modern.server": "Server",
   "block.cc_modern.server_advanced": "Advanced Server",
   "creativetab.cc_modern.tab": "CC: Modern",

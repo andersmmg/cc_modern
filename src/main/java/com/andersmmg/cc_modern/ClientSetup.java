@@ -1,6 +1,7 @@
 package com.andersmmg.cc_modern;
 
 import com.andersmmg.cc_modern.client.render.AngledMonitorBlockEntityRenderer;
+import com.andersmmg.cc_modern.client.render.TransparentMonitorBlockEntityRenderer;
 import com.andersmmg.cc_modern.client.render.WallMonitorBlockEntityRenderer;
 import com.andersmmg.cc_modern.client.render.WallMonitorHighlightRenderer;
 import com.andersmmg.cc_modern.init.ModBlockEntities;
@@ -21,6 +22,8 @@ public class ClientSetup {
             BlockEntityRenderers.register(ModBlockEntities.WALL_MONITOR_ADVANCED_BE.get(), WallMonitorBlockEntityRenderer::new);
             BlockEntityRenderers.register(ModBlockEntities.ANGLED_MONITOR_BE.get(), AngledMonitorBlockEntityRenderer::new);
             BlockEntityRenderers.register(ModBlockEntities.ANGLED_MONITOR_ADVANCED_BE.get(), AngledMonitorBlockEntityRenderer::new);
+            BlockEntityRenderers.register(ModBlockEntities.TRANSPARENT_MONITOR_BE.get(), TransparentMonitorBlockEntityRenderer::new);
+            BlockEntityRenderers.register(ModBlockEntities.TRANSPARENT_MONITOR_ADVANCED_BE.get(), TransparentMonitorBlockEntityRenderer::new);
         });
     }
 

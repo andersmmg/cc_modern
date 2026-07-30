@@ -28,6 +28,8 @@ public class ModLootTableProvider extends LootTableProvider {
             CCModern.WALL_MONITOR_ADVANCED_BLOCK.get(),
             CCModern.ANGLED_MONITOR_BLOCK.get(),
             CCModern.ANGLED_MONITOR_ADVANCED_BLOCK.get(),
+            CCModern.TRANSPARENT_MONITOR_BLOCK.get(),
+            CCModern.TRANSPARENT_MONITOR_ADVANCED_BLOCK.get(),
             CCModern.SERVER_BLOCK.get(),
             CCModern.SERVER_ADVANCED_BLOCK.get()
     );
@@ -63,6 +65,8 @@ public class ModLootTableProvider extends LootTableProvider {
             dropSelf(CCModern.WALL_MONITOR_ADVANCED_BLOCK.get());
             dropSelf(CCModern.ANGLED_MONITOR_BLOCK.get());
             dropSelf(CCModern.ANGLED_MONITOR_ADVANCED_BLOCK.get());
+            dropSelf(CCModern.TRANSPARENT_MONITOR_BLOCK.get());
+            dropSelf(CCModern.TRANSPARENT_MONITOR_ADVANCED_BLOCK.get());
 
             add(CCModern.SERVER_BLOCK.get(), computerLootTable(CCModern.SERVER_BLOCK.get()));
             add(CCModern.SERVER_ADVANCED_BLOCK.get(), computerLootTable(CCModern.SERVER_ADVANCED_BLOCK.get()));

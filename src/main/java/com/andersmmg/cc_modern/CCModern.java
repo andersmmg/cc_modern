@@ -2,6 +2,7 @@ package com.andersmmg.cc_modern;
 
 import com.andersmmg.cc_modern.block.AngledMonitorBlock;
 import com.andersmmg.cc_modern.block.ServerBlock;
+import com.andersmmg.cc_modern.block.TransparentMonitorBlock;
 import com.andersmmg.cc_modern.block.WallMonitorBlock;
 import com.andersmmg.cc_modern.config.CCModernConfig;
 import com.andersmmg.cc_modern.init.HolderRegistryEntry;
@@ -130,6 +131,38 @@ public class CCModern {
     public static final DeferredItem<BlockItem> ANGLED_MONITOR_ADVANCED_BLOCK_ITEM =
             ITEMS.registerSimpleBlockItem("angled_monitor_advanced", ANGLED_MONITOR_ADVANCED_BLOCK);
 
+    public static final DeferredBlock<TransparentMonitorBlock> TRANSPARENT_MONITOR_BLOCK = BLOCKS.register(
+            "transparent_monitor",
+            () -> new TransparentMonitorBlock(
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.NONE)
+                            .strength(2.5F)
+                            .requiresCorrectToolForDrops(),
+                    new HolderRegistryEntry<>(
+                            ModBlockEntities.TRANSPARENT_MONITOR_BE,
+                            ModBlockEntities.TRANSPARENT_MONITOR_BE.unwrapKey().orElseThrow().location()
+                    )
+            )
+    );
+    public static final DeferredItem<BlockItem> TRANSPARENT_MONITOR_BLOCK_ITEM =
+            ITEMS.registerSimpleBlockItem("transparent_monitor", TRANSPARENT_MONITOR_BLOCK);
+
+    public static final DeferredBlock<TransparentMonitorBlock> TRANSPARENT_MONITOR_ADVANCED_BLOCK = BLOCKS.register(
+            "transparent_monitor_advanced",
+            () -> new TransparentMonitorBlock(
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.NONE)
+                            .strength(2.5F)
+                            .requiresCorrectToolForDrops(),
+                    new HolderRegistryEntry<>(
+                            ModBlockEntities.TRANSPARENT_MONITOR_ADVANCED_BE,
+                            ModBlockEntities.TRANSPARENT_MONITOR_ADVANCED_BE.unwrapKey().orElseThrow().location()
+                    )
+            )
+    );
+    public static final DeferredItem<BlockItem> TRANSPARENT_MONITOR_ADVANCED_BLOCK_ITEM =
+            ITEMS.registerSimpleBlockItem("transparent_monitor_advanced", TRANSPARENT_MONITOR_ADVANCED_BLOCK);
+
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MOD_TAB = CREATIVE_TABS.register("tab", () -> CreativeModeTab.builder()
         .title(Component.translatable("creativetab." + MODID + ".tab"))
             .icon(() -> new ItemStack(SERVER_BLOCK_ITEM.get()))
@@ -138,6 +171,8 @@ public class CCModern {
             output.accept(WALL_MONITOR_ADVANCED_BLOCK_ITEM.get());
             output.accept(ANGLED_MONITOR_BLOCK_ITEM.get());
             output.accept(ANGLED_MONITOR_ADVANCED_BLOCK_ITEM.get());
+            output.accept(TRANSPARENT_MONITOR_BLOCK_ITEM.get());
+            output.accept(TRANSPARENT_MONITOR_ADVANCED_BLOCK_ITEM.get());
             output.accept(SERVER_BLOCK_ITEM.get());
             output.accept(SERVER_ADVANCED_BLOCK_ITEM.get());
         })

@@ -4,6 +4,8 @@
     "cc_modern:wall_monitor",
     "cc_modern:wall_monitor_advanced",
     "cc_modern:angled_monitor",
-    "cc_modern:angled_monitor_advanced"
+    "cc_modern:angled_monitor_advanced",
+    "cc_modern:transparent_monitor",
+    "cc_modern:transparent_monitor_advanced"
   ]
 }
