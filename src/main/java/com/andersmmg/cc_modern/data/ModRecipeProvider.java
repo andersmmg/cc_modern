@@ -22,6 +22,8 @@ public class ModRecipeProvider extends RecipeProvider {
             ResourceLocation.fromNamespaceAndPath("computercraft", "disk_drive");
     private static final ResourceLocation WIRELESS_MODEM_NORMAL =
             ResourceLocation.fromNamespaceAndPath("computercraft", "wireless_modem_normal");
+    private static final ResourceLocation WIRELESS_MODEM_ADVANCED =
+            ResourceLocation.fromNamespaceAndPath("computercraft", "wireless_modem_advanced");
     private static final TagKey<Item> GLASS_PANES =
             TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "glass_panes"));
 
@@ -66,6 +68,20 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(BuiltInRegistries.ITEM.get(WIRELESS_MODEM_NORMAL))
                 .unlockedBy("has_computer_advanced", has(BuiltInRegistries.ITEM.get(COMPUTER_ADVANCED)))
                 .save(output, ResourceLocation.fromNamespaceAndPath(CCModern.MODID, "server_advanced"));
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, CCModern.SERVER_ENDER_BLOCK.get())
+                .requires(BuiltInRegistries.ITEM.get(COMPUTER_NORMAL))
+                .requires(BuiltInRegistries.ITEM.get(DISK_DRIVE))
+                .requires(BuiltInRegistries.ITEM.get(WIRELESS_MODEM_ADVANCED))
+                .unlockedBy("has_computer_normal", has(BuiltInRegistries.ITEM.get(COMPUTER_NORMAL)))
+                .save(output, ResourceLocation.fromNamespaceAndPath(CCModern.MODID, "server_ender"));
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, CCModern.SERVER_ADVANCED_ENDER_BLOCK.get())
+                .requires(BuiltInRegistries.ITEM.get(COMPUTER_ADVANCED))
+                .requires(BuiltInRegistries.ITEM.get(DISK_DRIVE))
+                .requires(BuiltInRegistries.ITEM.get(WIRELESS_MODEM_ADVANCED))
+                .unlockedBy("has_computer_advanced", has(BuiltInRegistries.ITEM.get(COMPUTER_ADVANCED)))
+                .save(output, ResourceLocation.fromNamespaceAndPath(CCModern.MODID, "server_advanced_ender"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, CCModern.ANGLED_MONITOR_BLOCK.get(), 2)
                 .pattern("S  ")

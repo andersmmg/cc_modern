@@ -44,6 +44,16 @@ public final class ModPeripheralProviders {
         );
         event.registerBlockEntity(
                 PeripheralCapability.get(),
+                ModBlockEntities.SERVER_ENDER_BE.get(),
+                (be, side) -> be.peripheral()
+        );
+        event.registerBlockEntity(
+                PeripheralCapability.get(),
+                ModBlockEntities.SERVER_ADVANCED_ENDER_BE.get(),
+                (be, side) -> be.peripheral()
+        );
+        event.registerBlockEntity(
+                PeripheralCapability.get(),
                 ModBlockEntities.ANGLED_MONITOR_BE.get(),
                 (be, side) -> {
                     be.peripheral();

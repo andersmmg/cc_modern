@@ -24,6 +24,10 @@ public final class ServerModels {
                 "computercraft:block/computer_on", "computercraft:block/computer_blink");
         registerFamily(generators, CCModern.SERVER_ADVANCED_BLOCK.get(), "computer_advanced",
                 "computercraft:block/computer_on", "computercraft:block/computer_blink");
+        registerFamily(generators, CCModern.SERVER_ENDER_BLOCK.get(), "computer_normal",
+                "computercraft:block/computer_on", "computercraft:block/computer_blink");
+        registerFamily(generators, CCModern.SERVER_ADVANCED_ENDER_BLOCK.get(), "computer_advanced",
+                "computercraft:block/computer_on", "computercraft:block/computer_blink");
     }
 
     private static void registerFamily(

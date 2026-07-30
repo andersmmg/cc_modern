@@ -7,6 +7,8 @@
     "cc_modern:transparent_monitor",
     "cc_modern:transparent_monitor_advanced",
     "cc_modern:server",
-    "cc_modern:server_advanced"
+    "cc_modern:server_advanced",
+    "cc_modern:server_ender",
+    "cc_modern:server_advanced_ender"
   ]
 }

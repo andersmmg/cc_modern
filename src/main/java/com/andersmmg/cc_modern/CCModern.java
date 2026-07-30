@@ -99,6 +99,38 @@ public class CCModern {
     public static final DeferredItem<BlockItem> SERVER_ADVANCED_BLOCK_ITEM =
             ITEMS.registerSimpleBlockItem("server_advanced", SERVER_ADVANCED_BLOCK);
 
+    public static final DeferredBlock<ServerBlock> SERVER_ENDER_BLOCK = BLOCKS.register(
+            "server_ender",
+            () -> new ServerBlock(
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.STONE)
+                            .strength(2.5F)
+                            .requiresCorrectToolForDrops(),
+                    new HolderRegistryEntry<>(
+                            ModBlockEntities.SERVER_ENDER_BE,
+                            ModBlockEntities.SERVER_ENDER_BE.unwrapKey().orElseThrow().location()
+                    )
+            )
+    );
+    public static final DeferredItem<BlockItem> SERVER_ENDER_BLOCK_ITEM =
+            ITEMS.registerSimpleBlockItem("server_ender", SERVER_ENDER_BLOCK);
+
+    public static final DeferredBlock<ServerBlock> SERVER_ADVANCED_ENDER_BLOCK = BLOCKS.register(
+            "server_advanced_ender",
+            () -> new ServerBlock(
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.GOLD)
+                            .strength(2.5F)
+                            .requiresCorrectToolForDrops(),
+                    new HolderRegistryEntry<>(
+                            ModBlockEntities.SERVER_ADVANCED_ENDER_BE,
+                            ModBlockEntities.SERVER_ADVANCED_ENDER_BE.unwrapKey().orElseThrow().location()
+                    )
+            )
+    );
+    public static final DeferredItem<BlockItem> SERVER_ADVANCED_ENDER_BLOCK_ITEM =
+            ITEMS.registerSimpleBlockItem("server_advanced_ender", SERVER_ADVANCED_ENDER_BLOCK);
+
     public static final DeferredBlock<AngledMonitorBlock> ANGLED_MONITOR_BLOCK = BLOCKS.register(
             "angled_monitor",
             () -> new AngledMonitorBlock(
@@ -175,6 +207,8 @@ public class CCModern {
             output.accept(TRANSPARENT_MONITOR_ADVANCED_BLOCK_ITEM.get());
             output.accept(SERVER_BLOCK_ITEM.get());
             output.accept(SERVER_ADVANCED_BLOCK_ITEM.get());
+            output.accept(SERVER_ENDER_BLOCK_ITEM.get());
+            output.accept(SERVER_ADVANCED_ENDER_BLOCK_ITEM.get());
         })
         .build());
 

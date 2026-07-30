@@ -7,6 +7,8 @@
   "block.cc_modern.transparent_monitor_advanced": "Advanced Transparent Monitor",
   "block.cc_modern.server": "Server",
   "block.cc_modern.server_advanced": "Advanced Server",
+  "block.cc_modern.server_ender": "Ender Server",
+  "block.cc_modern.server_advanced_ender": "Advanced Ender Server",
   "creativetab.cc_modern.tab": "CC: Modern",
   "cc_modern.configuration.preventMergeWhenSneaking": "Prevent Merge When Sneaking",
   "cc_modern.configuration.preventMergeWhenSneaking.tooltip": "When enabled, sneaking while placing a monitor prevents it from merging with adjacent monitors."

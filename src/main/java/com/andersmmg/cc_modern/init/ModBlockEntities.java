@@ -23,6 +23,8 @@ public final class ModBlockEntities {
         new DeferredHolder[1];
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ServerBlockEntity>> SERVER_BE;
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ServerBlockEntity>> SERVER_ADVANCED_BE;
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ServerBlockEntity>> SERVER_ENDER_BE;
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ServerBlockEntity>> SERVER_ADVANCED_ENDER_BE;
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<WallMonitorBlockEntity>> WALL_MONITOR_BE;
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<WallMonitorBlockEntity>> WALL_MONITOR_ADVANCED_BE;
@@ -33,6 +35,10 @@ public final class ModBlockEntities {
     private static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ServerBlockEntity>>[] BE_SERVER_REF =
             new DeferredHolder[1];
     private static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ServerBlockEntity>>[] BE_SERVER_ADV_REF =
+            new DeferredHolder[1];
+    private static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ServerBlockEntity>>[] BE_SERVER_ENDER_REF =
+            new DeferredHolder[1];
+    private static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ServerBlockEntity>>[] BE_SERVER_ADV_ENDER_REF =
             new DeferredHolder[1];
     private static final DeferredHolder<BlockEntityType<?>, BlockEntityType<AngledMonitorBlockEntity>>[] BE_ANGLED_REF =
             new DeferredHolder[1];
@@ -79,6 +85,24 @@ public final class ModBlockEntities {
                 ).build(null)
         );
         SERVER_ADVANCED_BE = BE_SERVER_ADV_REF[0];
+
+        BE_SERVER_ENDER_REF[0] = BLOCK_ENTITY_TYPES.register(
+                "server_ender",
+                () -> BlockEntityType.Builder.of(
+                        (pos, state) -> new ServerBlockEntity(BE_SERVER_ENDER_REF[0].get(), pos, state, ComputerFamily.NORMAL),
+                        CCModern.SERVER_ENDER_BLOCK.get()
+                ).build(null)
+        );
+        SERVER_ENDER_BE = BE_SERVER_ENDER_REF[0];
+
+        BE_SERVER_ADV_ENDER_REF[0] = BLOCK_ENTITY_TYPES.register(
+                "server_advanced_ender",
+                () -> BlockEntityType.Builder.of(
+                        (pos, state) -> new ServerBlockEntity(BE_SERVER_ADV_ENDER_REF[0].get(), pos, state, ComputerFamily.ADVANCED),
+                        CCModern.SERVER_ADVANCED_ENDER_BLOCK.get()
+                ).build(null)
+        );
+        SERVER_ADVANCED_ENDER_BE = BE_SERVER_ADV_ENDER_REF[0];
 
         BE_ANGLED_REF[0] = BLOCK_ENTITY_TYPES.register(
                 "angled_monitor",
