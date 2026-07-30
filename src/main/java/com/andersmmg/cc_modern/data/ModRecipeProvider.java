@@ -91,28 +91,30 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_computer_advanced", has(BuiltInRegistries.ITEM.get(COMPUTER_ADVANCED)))
                 .save(output, ResourceLocation.fromNamespaceAndPath(CCModern.MODID, "angled_monitor_advanced_from_normal"));
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, CCModern.TRANSPARENT_MONITOR_BLOCK.get(), 2)
-                .pattern("GGG")
-                .pattern("GSG")
-                .pattern("GGG")
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, CCModern.TRANSPARENT_MONITOR_BLOCK.get())
+                .pattern("G")
+                .pattern("M")
+                .pattern("G")
                 .define('G', GLASS_PANES)
-                .define('S', Items.STONE)
-                .unlockedBy("has_computer_normal", has(BuiltInRegistries.ITEM.get(COMPUTER_NORMAL)))
+                .define('M', CCModern.WALL_MONITOR_BLOCK.get())
+                .unlockedBy("has_wall_monitor", has(CCModern.WALL_MONITOR_BLOCK.get()))
                 .save(output, ResourceLocation.fromNamespaceAndPath(CCModern.MODID, "transparent_monitor"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, CCModern.TRANSPARENT_MONITOR_ADVANCED_BLOCK.get())
-                .pattern("GGG")
-                .pattern("GIG")
-                .pattern("GGG")
+                .pattern("G")
+                .pattern("A")
+                .pattern("G")
                 .define('G', GLASS_PANES)
-                .define('I', Items.GOLD_INGOT)
-                .unlockedBy("has_computer_advanced", has(BuiltInRegistries.ITEM.get(COMPUTER_ADVANCED)))
+                .define('A', CCModern.WALL_MONITOR_ADVANCED_BLOCK.get())
+                .unlockedBy("has_wall_monitor_advanced", has(CCModern.WALL_MONITOR_ADVANCED_BLOCK.get()))
                 .save(output, ResourceLocation.fromNamespaceAndPath(CCModern.MODID, "transparent_monitor_advanced"));
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, CCModern.TRANSPARENT_MONITOR_ADVANCED_BLOCK.get())
                 .requires(CCModern.TRANSPARENT_MONITOR_BLOCK.get())
                 .requires(Items.GOLD_INGOT, 5)
-                .unlockedBy("has_computer_advanced", has(BuiltInRegistries.ITEM.get(COMPUTER_ADVANCED)))
+                .unlockedBy("has_transparent_monitor", has(CCModern.TRANSPARENT_MONITOR_BLOCK.get()))
                 .save(output, ResourceLocation.fromNamespaceAndPath(CCModern.MODID, "transparent_monitor_advanced_from_normal"));
+
+
     }
 }
