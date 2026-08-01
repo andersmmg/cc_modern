@@ -6,6 +6,8 @@
 
 ### Changed
 
+- Server internal peripherals no longer take up directional slots
+
 ### Deprecated
 
 ### Removed

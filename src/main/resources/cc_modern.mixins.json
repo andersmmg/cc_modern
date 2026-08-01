@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_21",
   "refmap": "cc_modern.refmap.json",
   "mixins": [
+    "MixinPeripheralAPI",
     "MonitorBlockEntityAccess",
     "MonitorBlockEntityMixin",
     "MonitorBlockMixin",
@@ -12,5 +13,8 @@
   ],
   "client": [
     "MonitorBlockEntityRendererAccess"
-  ]
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
 }

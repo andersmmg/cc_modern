@@ -9,10 +9,8 @@ import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.media.IMedia;
 import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IPeripheral;
-import dan200.computercraft.core.computer.ComputerSide;
 import dan200.computercraft.core.util.StringUtil;
 import dan200.computercraft.shared.ModRegistry;
-import dan200.computercraft.shared.computer.core.ServerComputer;
 import dan200.computercraft.shared.network.client.PlayRecordClientMessage;
 import dan200.computercraft.shared.network.server.ServerNetworking;
 import dan200.computercraft.shared.platform.PlatformHelper;
@@ -51,16 +49,9 @@ public class ServerDrive implements Container {
     private final Peripheral peripheral = new Peripheral();
     @GuardedBy("this")
     private DiskMedia media = DiskMedia.EMPTY;
-    private boolean attachedOnce = false;
 
     public ServerDrive(ServerBlockEntity owner) {
         this.owner = owner;
-    }
-
-    public void attachFirstTime(ServerComputer computer) {
-        if (attachedOnce) return;
-        computer.setPeripheral(ComputerSide.FRONT, peripheral);
-        attachedOnce = true;
     }
 
     public IPeripheral peripheral() {

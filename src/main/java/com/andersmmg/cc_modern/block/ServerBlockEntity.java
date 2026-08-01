@@ -3,6 +3,7 @@ package com.andersmmg.cc_modern.block;
 import com.andersmmg.cc_modern.drive.ServerDrive;
 import com.andersmmg.cc_modern.peripheral.ServerModemPeripheral;
 import com.andersmmg.cc_modern.peripheral.ServerPeripheral;
+import com.andersmmg.cc_modern.runtime.ServerComputerRegistry;
 import dan200.computercraft.api.peripheral.IPeripheral;
 import dan200.computercraft.core.computer.ComputerSide;
 import dan200.computercraft.shared.ModRegistry;
@@ -32,7 +33,8 @@ public class ServerBlockEntity extends AbstractComputerBlockEntity implements Co
 
     @Nullable
     private IPeripheral peripheral;
-    private @Nullable ServerComputer modemAttachedTo = null;
+
+    private boolean hubRegistered;
 
     public ServerBlockEntity(BlockEntityType<? extends ServerBlockEntity> type, BlockPos pos, BlockState state, ComputerFamily family) {
         super(type, pos, state, family);
@@ -64,10 +66,12 @@ public class ServerBlockEntity extends AbstractComputerBlockEntity implements Co
         };
     }
 
-    /** FRONT hosts the internal disk drive, BOTTOM the wireless modem; the rest are open. */
+    /**
+     * The internal drive and modem live on the virtual "internal" hub, so every side is open.
+     */
     @Override
     protected boolean isPeripheralBlockedOnSide(ComputerSide localSide) {
-        return localSide == ComputerSide.FRONT || localSide == ComputerSide.BOTTOM;
+        return false;
     }
 
     @Override
@@ -83,16 +87,17 @@ public class ServerBlockEntity extends AbstractComputerBlockEntity implements Co
         super.serverTick();
         if (getLevel().isClientSide) return;
 
-        var computer = getServerComputer();
-
-        if (computer != null) {
-            drive.attachFirstTime(computer);
-            attachModemIfNeeded(computer);
-        }
-
         drive.tick();
 
-        if (computer != null) updateBlockState(computer.getState());
+        var computer = getServerComputer();
+        if (computer != null) {
+            updateBlockState(computer.getState());
+            computer.keepAlive();
+            if (!hubRegistered) {
+                ServerComputerRegistry.register(computer.getID(), drivePeripheral(), modem());
+                hubRegistered = true;
+            }
+        }
     }
 
     @Override
@@ -157,6 +162,10 @@ public class ServerBlockEntity extends AbstractComputerBlockEntity implements Co
 
     @Override
     public void setRemoved() {
+        if (level != null && !level.isClientSide) {
+            var computer = getServerComputer();
+            if (computer != null) ServerComputerRegistry.unregister(computer.getID());
+        }
         super.setRemoved();
         modem.removed();
     }
@@ -181,10 +190,12 @@ public class ServerBlockEntity extends AbstractComputerBlockEntity implements Co
         if (level != null) level.blockEntityChanged(worldPosition);
     }
 
-    private void attachModemIfNeeded(ServerComputer computer) {
-        if (modemAttachedTo == computer) return;
-        computer.setPeripheral(ComputerSide.BOTTOM, modem);
-        modemAttachedTo = computer;
+    public IPeripheral drivePeripheral() {
+        return drive.peripheral();
+    }
+
+    public IPeripheral modem() {
+        return modem;
     }
 
     public IPeripheral peripheral() {

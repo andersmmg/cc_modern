@@ -8,6 +8,7 @@ import com.andersmmg.cc_modern.config.CCModernConfig;
 import com.andersmmg.cc_modern.init.HolderRegistryEntry;
 import com.andersmmg.cc_modern.init.ModBlockEntities;
 import com.andersmmg.cc_modern.init.ModPeripheralProviders;
+import com.andersmmg.cc_modern.runtime.ServerComputerRegistry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
@@ -22,6 +23,8 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -226,5 +229,11 @@ public class CCModern {
         ModBlockEntities.BLOCK_ENTITY_TYPES.register(modEventBus);
 
         ModPeripheralProviders.register(modEventBus);
+
+        NeoForge.EVENT_BUS.addListener(CCModern::onServerStopping);
+    }
+
+    private static void onServerStopping(ServerStoppingEvent event) {
+        ServerComputerRegistry.clearAll();
     }
 }
