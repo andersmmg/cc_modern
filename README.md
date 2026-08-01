@@ -14,8 +14,9 @@ CC: Modern adds more modern hardware to CC: Tweaked.
 ### Features:
 
 - **Wall Monitors:** Compact flat-panel monitors to display data
-- **Servers:** Compact wall computers with built-in wireless network and disk drive
+- **Servers:** Compact wall computers with built-in wireless network and disk drive, wireless or ender modem options
 - **Angled Monitors:** Handy angled monitors for dashboards and displays
+- **Transparent Monitors:** Flat transparent glass monitors, great for a HUD or window dashboard
 
 ### Requirements:
 
