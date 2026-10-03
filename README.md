@@ -22,6 +22,10 @@ CC: Modern adds more modern hardware to CC: Tweaked.
 
 - [CC: Tweaked](https://modrinth.com/mod/cc-tweaked)
 
+#### Compatible With
+
+- [CC: Graphics](https://modrinth.com/mod/cc-graphics)
+
 ### Downloads
 
 - [Modrinth](https://modrinth.com/mod/cc_modern/versions)
