@@ -3,7 +3,9 @@ package com.andersmmg.cc_modern.mixin;
 import com.andersmmg.cc_modern.block.AngledMonitorBlockEntity;
 import com.andersmmg.cc_modern.block.TransparentMonitorBlockEntity;
 import com.andersmmg.cc_modern.block.WallMonitorBlockEntity;
+import dan200.computercraft.shared.peripheral.monitor.MonitorBlock;
 import dan200.computercraft.shared.peripheral.monitor.MonitorBlockEntity;
+import net.minecraft.core.Direction;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -19,7 +21,10 @@ public class MonitorBlockEntityMixin {
         boolean otherAngled = other instanceof AngledMonitorBlockEntity;
 
         if (selfAngled || otherAngled) {
-            if (selfAngled != otherAngled || self.getBlockPos().getY() != other.getBlockPos().getY()) {
+            if (selfAngled != otherAngled
+                    || self.getBlockPos().getY() != other.getBlockPos().getY()
+                    || self.getBlockState().getValue(MonitorBlock.FACING) != other.getBlockState().getValue(MonitorBlock.FACING)
+                    || self.getBlockState().getValue(MonitorBlock.ORIENTATION) != other.getBlockState().getValue(MonitorBlock.ORIENTATION)) {
                 cir.setReturnValue(false);
             }
             return;
@@ -45,6 +50,7 @@ public class MonitorBlockEntityMixin {
     private float cc_modern$fixMonitorTouchXIndex(float xIndex) {
         MonitorBlockEntity self = (MonitorBlockEntity) (Object) this;
         if (!(self instanceof AngledMonitorBlockEntity)) return xIndex;
+        if (self.getBlockState().getValue(MonitorBlock.ORIENTATION) != Direction.NORTH) return xIndex;
         return self.getWidth() - 1 - (int) xIndex;
     }
 }

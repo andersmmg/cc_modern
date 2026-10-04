@@ -38,7 +38,12 @@ public class MonitorBlockMixin {
         if (player.isCrouching()) return;
 
         Direction facing = state.getValue(MonitorBlock.FACING);
-        if (hit.getDirection() == Direction.DOWN || hit.getDirection() == facing) return;
+        Direction orientation = state.getValue(MonitorBlock.ORIENTATION);
+        if (orientation == Direction.NORTH) {
+            if (hit.getDirection() == Direction.DOWN || hit.getDirection() == facing) return;
+        } else {
+            if (hit.getDirection() == facing.getOpposite()) return;
+        }
 
         if (!(level.getBlockEntity(pos) instanceof MonitorBlockEntity monitor)) return;
 
@@ -47,12 +52,39 @@ public class MonitorBlockMixin {
             return;
         }
 
-        float yaw = facing.toYRot() + 180f;
-
         Matrix4f pose = new Matrix4f();
         pose.translate(pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f);
-        pose.rotate(Axis.YN.rotationDegrees(yaw));
-        pose.rotate(Axis.XP.rotationDegrees(-67.5f));
+
+        float depthOffset;
+        double screenX0;
+        double screenY1;
+        double quadSize = 1.0 - 2.0 * (MonitorBlockEntity.RENDER_BORDER + MonitorBlockEntity.RENDER_MARGIN);
+
+        if (orientation == Direction.NORTH) {
+            float yaw = facing.toYRot() + 180f;
+            pose.rotate(Axis.YN.rotationDegrees(yaw));
+            pose.rotate(Axis.XP.rotationDegrees(-67.5f));
+            depthOffset = 5.0f / 16.0f - 0.5252f;
+            screenX0 = -0.5 + MonitorBlockEntity.RENDER_BORDER + MonitorBlockEntity.RENDER_MARGIN;
+            screenY1 = 1.0 - 0.63 - (MonitorBlockEntity.RENDER_BORDER + MonitorBlockEntity.RENDER_MARGIN);
+        } else if (orientation == Direction.UP) {
+            float yaw = facing.toYRot();
+            pose.rotate(Axis.YN.rotationDegrees(yaw));
+            pose.translate(0.0f, 0.5f, -0.4375f);
+            pose.rotate(Axis.XP.rotationDegrees(-22.5f));
+            depthOffset = 0.001f;
+            screenX0 = -0.5 + MonitorBlockEntity.RENDER_BORDER + MonitorBlockEntity.RENDER_MARGIN;
+            screenY1 = -(MonitorBlockEntity.RENDER_BORDER + MonitorBlockEntity.RENDER_MARGIN);
+        } else { // Direction.DOWN
+            float yaw = facing.toYRot();
+            pose.rotate(Axis.YN.rotationDegrees(yaw));
+            pose.translate(0.0f, -0.5f, -0.4375f);
+            pose.rotate(Axis.XP.rotationDegrees(22.5f));
+            depthOffset = 0.001f;
+            screenX0 = -0.5 + MonitorBlockEntity.RENDER_BORDER + MonitorBlockEntity.RENDER_MARGIN;
+            screenY1 = 1.0 - (MonitorBlockEntity.RENDER_BORDER + MonitorBlockEntity.RENDER_MARGIN);
+        }
+
         pose.invert();
 
         Vec3 eyePos = player.getEyePosition(1.0F);
@@ -68,7 +100,6 @@ public class MonitorBlockMixin {
             return;
         }
 
-        float depthOffset = 5.0f / 16.0f - 0.5252f;
         float t = (depthOffset - eyeLocal.z()) / lookLocal.z();
 
         if (t < 0.0f || t > 6.0f) {
@@ -79,13 +110,9 @@ public class MonitorBlockMixin {
         double rx = eyeLocal.x() + t * lookLocal.x();
         double ry = eyeLocal.y() + t * lookLocal.y();
 
-        double quadSize = 1.0 - 2.0 * (MonitorBlockEntity.RENDER_BORDER + MonitorBlockEntity.RENDER_MARGIN);
-        double screenX0 = -0.5 + MonitorBlockEntity.RENDER_BORDER + MonitorBlockEntity.RENDER_MARGIN;
-        double screenY1 = 1.0 - 0.63 - (MonitorBlockEntity.RENDER_BORDER + MonitorBlockEntity.RENDER_MARGIN);
-
         double fracX = (rx - screenX0) / quadSize;
         double fracY = (screenY1 - ry) / quadSize;
-        if (fracY < 0.0 || fracY >= 1.0) {
+        if (fracX < 0.0 || fracX >= 1.0 || fracY < 0.0 || fracY >= 1.0) {
             cir.setReturnValue(InteractionResult.PASS);
             return;
         }
