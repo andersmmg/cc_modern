@@ -8,6 +8,7 @@
     "3": "computercraft:block/monitor_advanced_32",
     "particle": "computercraft:block/monitor_advanced_4"
   },
+  "gui_light": "front",
   "elements": [
     {
       "name": "base",

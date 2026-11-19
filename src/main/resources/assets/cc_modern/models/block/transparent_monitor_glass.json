@@ -3,6 +3,7 @@
 	"credit": "Made with Blockbench",
 	"parent": "minecraft:block/block",
 	"render_type": "cutout",
+	"gui_light": "front",
 	"textures": {
 		"particle": "block/glass",
 		"border_glass": "block/glass"

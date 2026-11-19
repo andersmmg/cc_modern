@@ -1,5 +1,6 @@
 {
   "render_type": "cutout",
+  "gui_light": "front",
   "computercraft:emissive_texture": "cursor",
   "display": {
     "thirdperson_righthand": {
