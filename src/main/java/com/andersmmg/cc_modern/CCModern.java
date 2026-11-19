@@ -42,36 +42,36 @@ public class CCModern {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
     public static final DeferredBlock<WallMonitorBlock> WALL_MONITOR_BLOCK = BLOCKS.register(
-        "wall_monitor",
-        () -> new WallMonitorBlock(
-            BlockBehaviour.Properties.of()
-                .mapColor(MapColor.STONE)
-                .strength(2.5F)
-                .requiresCorrectToolForDrops(),
-            new HolderRegistryEntry<>(
-                ModBlockEntities.WALL_MONITOR_BE,
-                ModBlockEntities.WALL_MONITOR_BE.unwrapKey().orElseThrow().location()
+            "wall_monitor",
+            () -> new WallMonitorBlock(
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.STONE)
+                            .strength(2.5F)
+                            .requiresCorrectToolForDrops(),
+                    new HolderRegistryEntry<>(
+                            ModBlockEntities.WALL_MONITOR_BE,
+                            ModBlockEntities.WALL_MONITOR_BE.unwrapKey().orElseThrow().location()
+                    )
             )
-        )
     );
     public static final DeferredItem<BlockItem> WALL_MONITOR_BLOCK_ITEM =
-        ITEMS.registerSimpleBlockItem("wall_monitor", WALL_MONITOR_BLOCK);
+            ITEMS.registerSimpleBlockItem("wall_monitor", WALL_MONITOR_BLOCK);
 
     public static final DeferredBlock<WallMonitorBlock> WALL_MONITOR_ADVANCED_BLOCK = BLOCKS.register(
-        "wall_monitor_advanced",
-        () -> new WallMonitorBlock(
-            BlockBehaviour.Properties.of()
-                .mapColor(MapColor.GOLD)
-                .strength(2.5F)
-                .requiresCorrectToolForDrops(),
-            new HolderRegistryEntry<>(
-                ModBlockEntities.WALL_MONITOR_ADVANCED_BE,
-                ModBlockEntities.WALL_MONITOR_ADVANCED_BE.unwrapKey().orElseThrow().location()
+            "wall_monitor_advanced",
+            () -> new WallMonitorBlock(
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.GOLD)
+                            .strength(2.5F)
+                            .requiresCorrectToolForDrops(),
+                    new HolderRegistryEntry<>(
+                            ModBlockEntities.WALL_MONITOR_ADVANCED_BE,
+                            ModBlockEntities.WALL_MONITOR_ADVANCED_BE.unwrapKey().orElseThrow().location()
+                    )
             )
-        )
     );
     public static final DeferredItem<BlockItem> WALL_MONITOR_ADVANCED_BLOCK_ITEM =
-        ITEMS.registerSimpleBlockItem("wall_monitor_advanced", WALL_MONITOR_ADVANCED_BLOCK);
+            ITEMS.registerSimpleBlockItem("wall_monitor_advanced", WALL_MONITOR_ADVANCED_BLOCK);
 
     public static final DeferredBlock<ServerBlock> SERVER_BLOCK = BLOCKS.register(
             "server",
@@ -247,23 +247,23 @@ public class CCModern {
     @Nullable
     public static final DeferredItem<BlockItem> WALL_TERMINAL_ADVANCED_BLOCK_ITEM;
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MOD_TAB = CREATIVE_TABS.register("tab", () -> CreativeModeTab.builder()
-        .title(Component.translatable("creativetab." + MODID + ".tab"))
+            .title(Component.translatable("creativetab." + MODID + ".tab"))
             .icon(() -> new ItemStack(SERVER_BLOCK_ITEM.get()))
-        .displayItems((parameters, output) -> {
-            output.accept(WALL_MONITOR_BLOCK_ITEM.get());
-            output.accept(WALL_MONITOR_ADVANCED_BLOCK_ITEM.get());
-            output.accept(ANGLED_MONITOR_BLOCK_ITEM.get());
-            output.accept(ANGLED_MONITOR_ADVANCED_BLOCK_ITEM.get());
-            output.accept(TRANSPARENT_MONITOR_BLOCK_ITEM.get());
-            output.accept(TRANSPARENT_MONITOR_ADVANCED_BLOCK_ITEM.get());
-            output.accept(TRANSPARENT_WALL_MONITOR_BLOCK_ITEM.get());
-            output.accept(TRANSPARENT_WALL_MONITOR_ADVANCED_BLOCK_ITEM.get());
-            output.accept(SERVER_BLOCK_ITEM.get());
-            output.accept(SERVER_ADVANCED_BLOCK_ITEM.get());
-            output.accept(SERVER_ENDER_BLOCK_ITEM.get());
-            output.accept(SERVER_ADVANCED_ENDER_BLOCK_ITEM.get());
-            addWallTerminalItems(output);
-        })
+            .displayItems((parameters, output) -> {
+                output.accept(WALL_MONITOR_BLOCK_ITEM.get());
+                output.accept(WALL_MONITOR_ADVANCED_BLOCK_ITEM.get());
+                output.accept(ANGLED_MONITOR_BLOCK_ITEM.get());
+                output.accept(ANGLED_MONITOR_ADVANCED_BLOCK_ITEM.get());
+                output.accept(TRANSPARENT_MONITOR_BLOCK_ITEM.get());
+                output.accept(TRANSPARENT_MONITOR_ADVANCED_BLOCK_ITEM.get());
+                output.accept(TRANSPARENT_WALL_MONITOR_BLOCK_ITEM.get());
+                output.accept(TRANSPARENT_WALL_MONITOR_ADVANCED_BLOCK_ITEM.get());
+                output.accept(SERVER_BLOCK_ITEM.get());
+                output.accept(SERVER_ADVANCED_BLOCK_ITEM.get());
+                output.accept(SERVER_ENDER_BLOCK_ITEM.get());
+                output.accept(SERVER_ADVANCED_ENDER_BLOCK_ITEM.get());
+                addWallTerminalItems(output);
+            })
             .build());
 
     private static void addWallTerminalItems(CreativeModeTab.Output output) {
