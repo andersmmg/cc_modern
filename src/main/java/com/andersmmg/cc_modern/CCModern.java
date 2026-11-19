@@ -262,10 +262,14 @@ public class CCModern {
             output.accept(SERVER_ADVANCED_BLOCK_ITEM.get());
             output.accept(SERVER_ENDER_BLOCK_ITEM.get());
             output.accept(SERVER_ADVANCED_ENDER_BLOCK_ITEM.get());
-            if (WALL_TERMINAL_BLOCK_ITEM != null) output.accept(WALL_TERMINAL_BLOCK_ITEM.get());
-            if (WALL_TERMINAL_ADVANCED_BLOCK_ITEM != null) output.accept(WALL_TERMINAL_ADVANCED_BLOCK_ITEM.get());
+            addWallTerminalItems(output);
         })
-        .build());
+            .build());
+
+    private static void addWallTerminalItems(CreativeModeTab.Output output) {
+        if (WALL_TERMINAL_BLOCK_ITEM != null) output.accept(WALL_TERMINAL_BLOCK_ITEM.get());
+        if (WALL_TERMINAL_ADVANCED_BLOCK_ITEM != null) output.accept(WALL_TERMINAL_ADVANCED_BLOCK_ITEM.get());
+    }
 
     static {
         if (CCTerminalsCompat.isPresent()) {
