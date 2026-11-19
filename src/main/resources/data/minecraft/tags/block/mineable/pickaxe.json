@@ -6,6 +6,8 @@
     "cc_modern:angled_monitor_advanced",
     "cc_modern:transparent_monitor",
     "cc_modern:transparent_monitor_advanced",
+    "cc_modern:transparent_wall_monitor",
+    "cc_modern:transparent_wall_monitor_advanced",
     "cc_modern:server",
     "cc_modern:server_advanced",
     "cc_modern:server_ender",

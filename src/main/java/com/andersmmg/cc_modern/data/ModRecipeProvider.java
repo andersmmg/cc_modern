@@ -135,6 +135,28 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_transparent_monitor", has(CCModern.TRANSPARENT_MONITOR_BLOCK.get()))
                 .save(output, ResourceLocation.fromNamespaceAndPath(CCModern.MODID, "transparent_monitor_advanced_from_normal"));
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, CCModern.TRANSPARENT_WALL_MONITOR_BLOCK.get())
+                .pattern("G")
+                .pattern("T")
+                .define('G', GLASS_PANES)
+                .define('T', CCModern.TRANSPARENT_MONITOR_BLOCK.get())
+                .unlockedBy("has_wall_monitor", has(CCModern.TRANSPARENT_MONITOR_BLOCK.get()))
+                .save(output, ResourceLocation.fromNamespaceAndPath(CCModern.MODID, "transparent_wall_monitor"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, CCModern.TRANSPARENT_WALL_MONITOR_ADVANCED_BLOCK.get())
+                .pattern("G")
+                .pattern("A")
+                .define('G', GLASS_PANES)
+                .define('A', CCModern.TRANSPARENT_MONITOR_ADVANCED_BLOCK.get())
+                .unlockedBy("has_wall_monitor_advanced", has(CCModern.TRANSPARENT_MONITOR_ADVANCED_BLOCK.get()))
+                .save(output, ResourceLocation.fromNamespaceAndPath(CCModern.MODID, "transparent_wall_monitor_advanced"));
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, CCModern.TRANSPARENT_WALL_MONITOR_ADVANCED_BLOCK.get())
+                .requires(CCModern.TRANSPARENT_WALL_MONITOR_BLOCK.get())
+                .requires(Items.GOLD_INGOT, 5)
+                .unlockedBy("has_transparent_wall_monitor", has(CCModern.TRANSPARENT_WALL_MONITOR_BLOCK.get()))
+                .save(output, ResourceLocation.fromNamespaceAndPath(CCModern.MODID, "transparent_wall_monitor_advanced_from_normal"));
+
         if (CCModern.WALL_TERMINAL_BLOCK != null) {
             ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, CCModern.WALL_TERMINAL_BLOCK.get())
                     .requires(CCModern.WALL_MONITOR_BLOCK.get())

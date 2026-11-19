@@ -1,9 +1,6 @@
 package com.andersmmg.cc_modern;
 
-import com.andersmmg.cc_modern.block.AngledMonitorBlock;
-import com.andersmmg.cc_modern.block.ServerBlock;
-import com.andersmmg.cc_modern.block.TransparentMonitorBlock;
-import com.andersmmg.cc_modern.block.WallMonitorBlock;
+import com.andersmmg.cc_modern.block.*;
 import com.andersmmg.cc_modern.compat.CCTerminalsCompat;
 import com.andersmmg.cc_modern.compat.WallTerminalRegistration;
 import com.andersmmg.cc_modern.config.CCModernConfig;
@@ -204,6 +201,40 @@ public class CCModern {
     public static final DeferredItem<BlockItem> TRANSPARENT_MONITOR_ADVANCED_BLOCK_ITEM =
             ITEMS.registerSimpleBlockItem("transparent_monitor_advanced", TRANSPARENT_MONITOR_ADVANCED_BLOCK);
 
+    public static final DeferredBlock<TransparentWallMonitorBlock> TRANSPARENT_WALL_MONITOR_BLOCK = BLOCKS.register(
+            "transparent_wall_monitor",
+            () -> new TransparentWallMonitorBlock(
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.NONE)
+                            .noOcclusion()
+                            .strength(2.5F)
+                            .requiresCorrectToolForDrops(),
+                    new HolderRegistryEntry<>(
+                            ModBlockEntities.TRANSPARENT_WALL_MONITOR_BE,
+                            ModBlockEntities.TRANSPARENT_WALL_MONITOR_BE.unwrapKey().orElseThrow().location()
+                    )
+            )
+    );
+    public static final DeferredItem<BlockItem> TRANSPARENT_WALL_MONITOR_BLOCK_ITEM =
+            ITEMS.registerSimpleBlockItem("transparent_wall_monitor", TRANSPARENT_WALL_MONITOR_BLOCK);
+
+    public static final DeferredBlock<TransparentWallMonitorBlock> TRANSPARENT_WALL_MONITOR_ADVANCED_BLOCK = BLOCKS.register(
+            "transparent_wall_monitor_advanced",
+            () -> new TransparentWallMonitorBlock(
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.NONE)
+                            .noOcclusion()
+                            .strength(2.5F)
+                            .requiresCorrectToolForDrops(),
+                    new HolderRegistryEntry<>(
+                            ModBlockEntities.TRANSPARENT_WALL_MONITOR_ADVANCED_BE,
+                            ModBlockEntities.TRANSPARENT_WALL_MONITOR_ADVANCED_BE.unwrapKey().orElseThrow().location()
+                    )
+            )
+    );
+    public static final DeferredItem<BlockItem> TRANSPARENT_WALL_MONITOR_ADVANCED_BLOCK_ITEM =
+            ITEMS.registerSimpleBlockItem("transparent_wall_monitor_advanced", TRANSPARENT_WALL_MONITOR_ADVANCED_BLOCK);
+
     /**
      * The wall terminal builds on CC: Terminals, which is optional.
      */
@@ -225,6 +256,8 @@ public class CCModern {
             output.accept(ANGLED_MONITOR_ADVANCED_BLOCK_ITEM.get());
             output.accept(TRANSPARENT_MONITOR_BLOCK_ITEM.get());
             output.accept(TRANSPARENT_MONITOR_ADVANCED_BLOCK_ITEM.get());
+            output.accept(TRANSPARENT_WALL_MONITOR_BLOCK_ITEM.get());
+            output.accept(TRANSPARENT_WALL_MONITOR_ADVANCED_BLOCK_ITEM.get());
             output.accept(SERVER_BLOCK_ITEM.get());
             output.accept(SERVER_ADVANCED_BLOCK_ITEM.get());
             output.accept(SERVER_ENDER_BLOCK_ITEM.get());

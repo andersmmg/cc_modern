@@ -86,6 +86,22 @@ public final class ModPeripheralProviders {
                     return new MonitorPeripheral(be);
                 }
         );
+        event.registerBlockEntity(
+                PeripheralCapability.get(),
+                ModBlockEntities.TRANSPARENT_WALL_MONITOR_BE.get(),
+                (be, side) -> {
+                    be.peripheral();
+                    return new MonitorPeripheral(be);
+                }
+        );
+        event.registerBlockEntity(
+                PeripheralCapability.get(),
+                ModBlockEntities.TRANSPARENT_WALL_MONITOR_ADVANCED_BE.get(),
+                (be, side) -> {
+                    be.peripheral();
+                    return new MonitorPeripheral(be);
+                }
+        );
         if (CCTerminalsCompat.isPresent()) {
             WallTerminalRegistration.registerPeripheral(event);
         }

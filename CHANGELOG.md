@@ -5,6 +5,7 @@
 ### Added
 
 - Wall terminals integrating with [CC: Terminals](https://modrinth.com/mod/cc-terminals)
+- Transparent wall monitor variant, up against the edge
 
 ### Changed
 

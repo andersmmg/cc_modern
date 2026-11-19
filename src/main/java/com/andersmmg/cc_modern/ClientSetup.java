@@ -24,6 +24,8 @@ public class ClientSetup {
             BlockEntityRenderers.register(ModBlockEntities.ANGLED_MONITOR_ADVANCED_BE.get(), AngledMonitorBlockEntityRenderer::new);
             BlockEntityRenderers.register(ModBlockEntities.TRANSPARENT_MONITOR_BE.get(), TransparentMonitorBlockEntityRenderer::new);
             BlockEntityRenderers.register(ModBlockEntities.TRANSPARENT_MONITOR_ADVANCED_BE.get(), TransparentMonitorBlockEntityRenderer::new);
+            BlockEntityRenderers.register(ModBlockEntities.TRANSPARENT_WALL_MONITOR_BE.get(), TransparentMonitorBlockEntityRenderer::wall);
+            BlockEntityRenderers.register(ModBlockEntities.TRANSPARENT_WALL_MONITOR_ADVANCED_BE.get(), TransparentMonitorBlockEntityRenderer::wall);
         });
     }
 

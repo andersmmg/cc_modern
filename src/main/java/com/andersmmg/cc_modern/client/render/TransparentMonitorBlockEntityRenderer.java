@@ -28,10 +28,22 @@ import static dan200.computercraft.client.render.text.FixedWidthFontRenderer.FON
 
 public class TransparentMonitorBlockEntityRenderer extends MonitorBlockEntityRenderer {
     private static final float MARGIN = (float) (MonitorBlockEntity.RENDER_MARGIN * 1.1);
-    private static final float DEPTH_OFFSET = 1.0f / 16.0f - 0.5f + 0.001f;
+    public static final float WALL_DEPTH_OFFSET = 1.0f / 16.0f - 0.5f + 0.001f;
+    private static final float DEPTH_OFFSET = WALL_DEPTH_OFFSET + 0.47f;
+
+    private final float depthOffset;
 
     public TransparentMonitorBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
+        this(context, DEPTH_OFFSET);
+    }
+
+    public TransparentMonitorBlockEntityRenderer(BlockEntityRendererProvider.Context context, float depthOffset) {
         super(context);
+        this.depthOffset = depthOffset;
+    }
+
+    public static TransparentMonitorBlockEntityRenderer wall(BlockEntityRendererProvider.Context context) {
+        return new TransparentMonitorBlockEntityRenderer(context, WALL_DEPTH_OFFSET);
     }
 
     @Override
@@ -70,7 +82,7 @@ public class TransparentMonitorBlockEntityRenderer extends MonitorBlockEntityRen
         transform.translate(
                 -0.5 + MonitorBlockEntity.RENDER_BORDER + MonitorBlockEntity.RENDER_MARGIN,
                 origin.getHeight() - 0.5 - (MonitorBlockEntity.RENDER_BORDER + MonitorBlockEntity.RENDER_MARGIN),
-                DEPTH_OFFSET + 0.47
+                depthOffset
         );
         var xSize = origin.getWidth() - 2.0 * (MonitorBlockEntity.RENDER_MARGIN + MonitorBlockEntity.RENDER_BORDER);
         var ySize = origin.getHeight() - 2.0 * (MonitorBlockEntity.RENDER_MARGIN + MonitorBlockEntity.RENDER_BORDER);
