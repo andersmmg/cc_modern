@@ -4,6 +4,8 @@
 
 ### Added
 
+- Wall terminals integrating with [CC: Terminals](https://modrinth.com/mod/cc-terminals)
+
 ### Changed
 
 - Server internal peripherals no longer take up directional slots

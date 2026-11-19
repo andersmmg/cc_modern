@@ -112,6 +112,9 @@ tasks.withType(ProcessResources).configureEach {
 }
 
 
+def ccterminalsVersion = ccterminals_version
+def ccterminalsCompileJar = layout.buildDirectory.file("compile-mods/ccterminals-${ccterminalsVersion}.jar")
+
 dependencies {
     // CC-Tweaked full jar (compile-time, internal + API symbols) and runtime per CC-Tweaked README.
     // We compile against the full jar because this addon subclasses shared monitor classes
@@ -119,6 +122,8 @@ dependencies {
     // (forge-api at compileTime, forge at runtime) is reserved for forward-compatible addons.
     compileOnly "cc.tweaked:cc-tweaked-${minecraft_version}-forge:${cct_version}"
     runtimeOnly "cc.tweaked:cc-tweaked-${minecraft_version}-forge:${cct_version}"
+
+    compileOnly files(ccterminalsCompileJar)
 
     // Example mod dependency with JEI
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
@@ -167,6 +172,48 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
 sourceSets.main.resources.srcDir generateModMetadata
 // To avoid having to run "generateModMetadata" manually, make it run on every project reload
 neoForge.ideSyncTask generateModMetadata
+
+def downloadCompileMods = tasks.register('downloadCompileMods') {
+    group = 'build setup'
+    description = 'Downloads the mod jars CC: Modern only needs on the compile classpath.'
+    def target = ccterminalsCompileJar
+    def downloadUrl = ccterminals_compile_url
+    def expectedSha512 = ccterminals_compile_sha512
+    outputs.file target
+    doLast {
+        def file = target.get().asFile
+        if (!file.exists()) {
+            file.parentFile.mkdirs()
+            logger.lifecycle("Downloading CC: Terminals ${ccterminalsVersion} from ${downloadUrl}")
+            def temp = new File(file.parentFile, file.name + '.part')
+            def connection = new java.net.URL(downloadUrl.toString()).openConnection()
+            connection.connectTimeout = 20_000
+            connection.readTimeout = 120_000
+            connection.inputStream.withStream { input ->
+                temp.withOutputStream { output -> output << input }
+            }
+            java.nio.file.Files.move(temp.toPath(), file.toPath(),
+                    java.nio.file.StandardCopyOption.REPLACE_EXISTING)
+        }
+        def digest = java.security.MessageDigest.getInstance('SHA-512')
+        file.withInputStream { input ->
+            def buffer = new byte[8192]
+            int read
+            while ((read = input.read(buffer)) != -1) {
+                digest.update(buffer, 0, read)
+            }
+        }
+        def actual = digest.digest().encodeHex().toString()
+        if (actual != expectedSha512) {
+            file.delete()
+            throw new GradleException("CC: Terminals jar failed its SHA-512 check " +
+                    "(expected ${expectedSha512}, got ${actual}). Run downloadCompileMods again.")
+        }
+    }
+}
+
+tasks.named('compileJava').configure { dependsOn downloadCompileMods }
+neoForge.ideSyncTask downloadCompileMods
 
 // Example configuration to allow publishing using the maven-publish plugin
 publishing {

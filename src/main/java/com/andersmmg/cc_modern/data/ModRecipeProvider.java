@@ -1,6 +1,7 @@
 package com.andersmmg.cc_modern.data;
 
 import com.andersmmg.cc_modern.CCModern;
+import com.andersmmg.cc_modern.compat.CCTerminalsCompat;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -10,6 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -26,6 +28,8 @@ public class ModRecipeProvider extends RecipeProvider {
             ResourceLocation.fromNamespaceAndPath("computercraft", "wireless_modem_advanced");
     private static final TagKey<Item> GLASS_PANES =
             TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "glass_panes"));
+    private static final TagKey<Item> BUTTONS =
+            TagKey.create(Registries.ITEM, ResourceLocation.withDefaultNamespace("buttons"));
 
     public ModRecipeProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookup) {
         super(output, lookup);
@@ -131,6 +135,21 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_transparent_monitor", has(CCModern.TRANSPARENT_MONITOR_BLOCK.get()))
                 .save(output, ResourceLocation.fromNamespaceAndPath(CCModern.MODID, "transparent_monitor_advanced_from_normal"));
 
-
+        if (CCModern.WALL_TERMINAL_BLOCK != null) {
+            ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, CCModern.WALL_TERMINAL_BLOCK.get())
+                    .requires(CCModern.WALL_MONITOR_BLOCK.get())
+                    .requires(BUTTONS)
+                    .unlockedBy("has_wall_monitor", has(CCModern.WALL_MONITOR_BLOCK.get()))
+                    .save(output.withConditions(new ModLoadedCondition(CCTerminalsCompat.MOD_ID)),
+                            ResourceLocation.fromNamespaceAndPath(CCModern.MODID, "wall_terminal"));
+        }
+        if (CCModern.WALL_TERMINAL_ADVANCED_BLOCK != null) {
+            ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, CCModern.WALL_TERMINAL_ADVANCED_BLOCK.get())
+                    .requires(CCModern.WALL_MONITOR_ADVANCED_BLOCK.get())
+                    .requires(BUTTONS)
+                    .unlockedBy("has_wall_monitor_advanced", has(CCModern.WALL_MONITOR_ADVANCED_BLOCK.get()))
+                    .save(output.withConditions(new ModLoadedCondition(CCTerminalsCompat.MOD_ID)),
+                            ResourceLocation.fromNamespaceAndPath(CCModern.MODID, "wall_terminal_advanced"));
+        }
     }
 }

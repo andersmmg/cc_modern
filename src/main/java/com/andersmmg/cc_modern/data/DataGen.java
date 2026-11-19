@@ -55,6 +55,12 @@ public class DataGen {
             AngledMonitorModels.addBlockModels(generators);
             ServerModels.addBlockModels(generators);
             TransparentMonitorModels.addBlockModels(generators);
+            if (CCModern.WALL_TERMINAL_BLOCK != null) {
+                WallTerminalModels.addBlockModels(generators, CCModern.WALL_TERMINAL_BLOCK.get(), "terminal_normal");
+            }
+            if (CCModern.WALL_TERMINAL_ADVANCED_BLOCK != null) {
+                WallTerminalModels.addBlockModels(generators, CCModern.WALL_TERMINAL_ADVANCED_BLOCK.get(), "terminal_advanced");
+            }
 
             for (var block : BuiltInRegistries.BLOCK) {
                 if (!blockStates.containsKey(block)) continue;

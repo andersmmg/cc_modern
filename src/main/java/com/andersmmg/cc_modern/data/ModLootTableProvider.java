@@ -18,21 +18,29 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.predicates.AnyOfCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class ModLootTableProvider extends LootTableProvider {
-    private static final List<Block> KNOWN_BLOCKS = List.of(
-            CCModern.WALL_MONITOR_BLOCK.get(),
-            CCModern.WALL_MONITOR_ADVANCED_BLOCK.get(),
-            CCModern.ANGLED_MONITOR_BLOCK.get(),
-            CCModern.ANGLED_MONITOR_ADVANCED_BLOCK.get(),
-            CCModern.TRANSPARENT_MONITOR_BLOCK.get(),
-            CCModern.TRANSPARENT_MONITOR_ADVANCED_BLOCK.get(),
-            CCModern.SERVER_BLOCK.get(),
-            CCModern.SERVER_ADVANCED_BLOCK.get()
-    );
+    private static final List<Block> KNOWN_BLOCKS = knownBlocks();
+
+    private static List<Block> knownBlocks() {
+        var blocks = new ArrayList<Block>(List.of(
+                CCModern.WALL_MONITOR_BLOCK.get(),
+                CCModern.WALL_MONITOR_ADVANCED_BLOCK.get(),
+                CCModern.ANGLED_MONITOR_BLOCK.get(),
+                CCModern.ANGLED_MONITOR_ADVANCED_BLOCK.get(),
+                CCModern.TRANSPARENT_MONITOR_BLOCK.get(),
+                CCModern.TRANSPARENT_MONITOR_ADVANCED_BLOCK.get(),
+                CCModern.SERVER_BLOCK.get(),
+                CCModern.SERVER_ADVANCED_BLOCK.get()
+        ));
+        if (CCModern.WALL_TERMINAL_BLOCK != null) blocks.add(CCModern.WALL_TERMINAL_BLOCK.get());
+        if (CCModern.WALL_TERMINAL_ADVANCED_BLOCK != null) blocks.add(CCModern.WALL_TERMINAL_ADVANCED_BLOCK.get());
+        return List.copyOf(blocks);
+    }
 
     public ModLootTableProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookup) {
         super(output, Set.of(), List.of(
@@ -70,6 +78,9 @@ public class ModLootTableProvider extends LootTableProvider {
 
             add(CCModern.SERVER_BLOCK.get(), computerLootTable(CCModern.SERVER_BLOCK.get()));
             add(CCModern.SERVER_ADVANCED_BLOCK.get(), computerLootTable(CCModern.SERVER_ADVANCED_BLOCK.get()));
+
+            if (CCModern.WALL_TERMINAL_BLOCK != null) dropSelf(CCModern.WALL_TERMINAL_BLOCK.get());
+            if (CCModern.WALL_TERMINAL_ADVANCED_BLOCK != null) dropSelf(CCModern.WALL_TERMINAL_ADVANCED_BLOCK.get());
         }
 
         @Override

@@ -4,6 +4,8 @@ import com.andersmmg.cc_modern.block.AngledMonitorBlock;
 import com.andersmmg.cc_modern.block.ServerBlock;
 import com.andersmmg.cc_modern.block.TransparentMonitorBlock;
 import com.andersmmg.cc_modern.block.WallMonitorBlock;
+import com.andersmmg.cc_modern.compat.CCTerminalsCompat;
+import com.andersmmg.cc_modern.compat.WallTerminalRegistration;
 import com.andersmmg.cc_modern.config.CCModernConfig;
 import com.andersmmg.cc_modern.init.HolderRegistryEntry;
 import com.andersmmg.cc_modern.init.ModBlockEntities;
@@ -14,6 +16,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.neoforged.bus.api.IEventBus;
@@ -29,6 +32,9 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.function.Supplier;
 
 @Mod(CCModern.MODID)
 public class CCModern {
@@ -198,6 +204,17 @@ public class CCModern {
     public static final DeferredItem<BlockItem> TRANSPARENT_MONITOR_ADVANCED_BLOCK_ITEM =
             ITEMS.registerSimpleBlockItem("transparent_monitor_advanced", TRANSPARENT_MONITOR_ADVANCED_BLOCK);
 
+    /**
+     * The wall terminal builds on CC: Terminals, which is optional.
+     */
+    @Nullable
+    public static final Supplier<Block> WALL_TERMINAL_BLOCK;
+    @Nullable
+    public static final DeferredItem<BlockItem> WALL_TERMINAL_BLOCK_ITEM;
+    @Nullable
+    public static final Supplier<Block> WALL_TERMINAL_ADVANCED_BLOCK;
+    @Nullable
+    public static final DeferredItem<BlockItem> WALL_TERMINAL_ADVANCED_BLOCK_ITEM;
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MOD_TAB = CREATIVE_TABS.register("tab", () -> CreativeModeTab.builder()
         .title(Component.translatable("creativetab." + MODID + ".tab"))
             .icon(() -> new ItemStack(SERVER_BLOCK_ITEM.get()))
@@ -212,8 +229,25 @@ public class CCModern {
             output.accept(SERVER_ADVANCED_BLOCK_ITEM.get());
             output.accept(SERVER_ENDER_BLOCK_ITEM.get());
             output.accept(SERVER_ADVANCED_ENDER_BLOCK_ITEM.get());
+            if (WALL_TERMINAL_BLOCK_ITEM != null) output.accept(WALL_TERMINAL_BLOCK_ITEM.get());
+            if (WALL_TERMINAL_ADVANCED_BLOCK_ITEM != null) output.accept(WALL_TERMINAL_ADVANCED_BLOCK_ITEM.get());
         })
         .build());
+
+    static {
+        if (CCTerminalsCompat.isPresent()) {
+            WallTerminalRegistration.register(BLOCKS, ITEMS, ModBlockEntities.BLOCK_ENTITY_TYPES);
+            WALL_TERMINAL_BLOCK = WallTerminalRegistration.block();
+            WALL_TERMINAL_BLOCK_ITEM = WallTerminalRegistration.item();
+            WALL_TERMINAL_ADVANCED_BLOCK = WallTerminalRegistration.advancedBlock();
+            WALL_TERMINAL_ADVANCED_BLOCK_ITEM = WallTerminalRegistration.advancedItem();
+        } else {
+            WALL_TERMINAL_BLOCK = null;
+            WALL_TERMINAL_BLOCK_ITEM = null;
+            WALL_TERMINAL_ADVANCED_BLOCK = null;
+            WALL_TERMINAL_ADVANCED_BLOCK_ITEM = null;
+        }
+    }
 
     public CCModern(IEventBus modEventBus, ModContainer modContainer) {
         modContainer.registerConfig(ModConfig.Type.COMMON, CCModernConfig.SPEC);

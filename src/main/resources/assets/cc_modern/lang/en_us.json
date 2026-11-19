@@ -9,6 +9,8 @@
   "block.cc_modern.server_advanced": "Advanced Server",
   "block.cc_modern.server_ender": "Ender Server",
   "block.cc_modern.server_advanced_ender": "Advanced Ender Server",
+  "block.cc_modern.wall_terminal": "Wall Terminal",
+  "block.cc_modern.wall_terminal_advanced": "Advanced Wall Terminal",
   "creativetab.cc_modern.tab": "CC: Modern",
   "cc_modern.configuration.preventMergeWhenSneaking": "Prevent Merge When Sneaking",
   "cc_modern.configuration.preventMergeWhenSneaking.tooltip": "When enabled, sneaking while placing a monitor prevents it from merging with adjacent monitors."

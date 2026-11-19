@@ -1,5 +1,7 @@
 package com.andersmmg.cc_modern.init;
 
+import com.andersmmg.cc_modern.compat.CCTerminalsCompat;
+import com.andersmmg.cc_modern.compat.WallTerminalRegistration;
 import com.andersmmg.cc_modern.peripheral.WallMonitorPeripheral;
 import dan200.computercraft.api.peripheral.PeripheralCapability;
 import dan200.computercraft.shared.peripheral.monitor.MonitorPeripheral;
@@ -84,5 +86,8 @@ public final class ModPeripheralProviders {
                     return new MonitorPeripheral(be);
                 }
         );
+        if (CCTerminalsCompat.isPresent()) {
+            WallTerminalRegistration.registerPeripheral(event);
+        }
     }
 }
