@@ -12,7 +12,13 @@
     "cc_modern:server_advanced",
     "cc_modern:server_ender",
     "cc_modern:server_advanced_ender",
-    "cc_modern:wall_terminal",
-    "cc_modern:wall_terminal_advanced"
+    {
+      "id": "cc_modern:wall_terminal",
+      "required": false
+    },
+    {
+      "id": "cc_modern:wall_terminal_advanced",
+      "required": false
+    }
   ]
 }

@@ -12,6 +12,9 @@
 
 ### Fixed
 
+- Wall terminals no longer break tags without CC: Terminals installed
+- Wall terminal loot tables are now conditional
+
 ## [0.2.0] - 2026-11-19
 
 ### Added
