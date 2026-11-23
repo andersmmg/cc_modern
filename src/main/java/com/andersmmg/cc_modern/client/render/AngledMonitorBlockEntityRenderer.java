@@ -15,6 +15,7 @@ import dan200.computercraft.shared.peripheral.monitor.MonitorBlock;
 import dan200.computercraft.shared.peripheral.monitor.MonitorBlockEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.core.Direction;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
 
@@ -49,8 +50,8 @@ public class AngledMonitorBlockEntityRenderer extends MonitorBlockEntityRenderer
         renderState.lastRenderPos = monitorPos;
 
         var originPos = origin.getBlockPos();
-        // ORIENTATION is pinned NORTH, so read FACING for the screen rotation instead. no idea why
-        var yaw = origin.getBlockState().getValue(MonitorBlock.FACING).toYRot() + 180f;
+        var facing = origin.getBlockState().getValue(MonitorBlock.FACING);
+        var orientation = origin.getBlockState().getValue(MonitorBlock.ORIENTATION);
 
         transform.pushPose();
         transform.translate(
@@ -59,13 +60,36 @@ public class AngledMonitorBlockEntityRenderer extends MonitorBlockEntityRenderer
                 originPos.getZ() - monitorPos.getZ() + 0.5
         );
 
-        transform.mulPose(Axis.YN.rotationDegrees(yaw));
-        transform.mulPose(Axis.XP.rotationDegrees(TILT_PITCH_DEG));
-        transform.translate(
-                -0.5 + MonitorBlockEntity.RENDER_BORDER + MonitorBlockEntity.RENDER_MARGIN - (origin.getWidth() - 1),
-                origin.getHeight() - 0.63 - (MonitorBlockEntity.RENDER_BORDER + MonitorBlockEntity.RENDER_MARGIN),
-                DEPTH_OFFSET
-        );
+        if (orientation == Direction.NORTH) {
+            var yaw = facing.toYRot() + 180f;
+            transform.mulPose(Axis.YN.rotationDegrees(yaw));
+            transform.mulPose(Axis.XP.rotationDegrees(TILT_PITCH_DEG));
+            transform.translate(
+                    -0.5 + MonitorBlockEntity.RENDER_BORDER + MonitorBlockEntity.RENDER_MARGIN - (origin.getWidth() - 1),
+                    origin.getHeight() - 0.63 - (MonitorBlockEntity.RENDER_BORDER + MonitorBlockEntity.RENDER_MARGIN),
+                    DEPTH_OFFSET
+            );
+        } else if (orientation == Direction.UP) {
+            var yaw = facing.toYRot();
+            transform.mulPose(Axis.YN.rotationDegrees(yaw));
+            transform.translate(0.0, 0.5, -0.4375);
+            transform.mulPose(Axis.XP.rotationDegrees(-22.5f));
+            transform.translate(
+                    -0.5 + MonitorBlockEntity.RENDER_BORDER + MonitorBlockEntity.RENDER_MARGIN,
+                    -(MonitorBlockEntity.RENDER_BORDER + MonitorBlockEntity.RENDER_MARGIN),
+                    0.001
+            );
+        } else { // Direction.DOWN
+            var yaw = facing.toYRot();
+            transform.mulPose(Axis.YN.rotationDegrees(yaw));
+            transform.translate(0.0, -0.5, -0.4375);
+            transform.mulPose(Axis.XP.rotationDegrees(22.5f));
+            transform.translate(
+                    -0.5 + MonitorBlockEntity.RENDER_BORDER + MonitorBlockEntity.RENDER_MARGIN,
+                    origin.getHeight() - (MonitorBlockEntity.RENDER_BORDER + MonitorBlockEntity.RENDER_MARGIN),
+                    0.001
+            );
+        }
 
         var xSize = origin.getWidth() - 2.0 * (MonitorBlockEntity.RENDER_MARGIN + MonitorBlockEntity.RENDER_BORDER);
         var ySize = origin.getHeight() - 2.0 * (MonitorBlockEntity.RENDER_MARGIN + MonitorBlockEntity.RENDER_BORDER);
